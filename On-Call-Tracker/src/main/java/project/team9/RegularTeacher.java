@@ -1,3 +1,4 @@
+package project.team9;
 //not sure if correct
 public class RegularTeacher extends Teacher{
 	

@@ -1,3 +1,4 @@
+package project.team9;
 
 // may be an abstract class if it is then code and name should be type final
 public class Teacher{
