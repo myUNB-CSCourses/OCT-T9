@@ -3,16 +3,16 @@ package project.team9;
 // may be an abstract class if it is then code and name should be type final
 public class Teacher{
 
-	private int code;
+	private int id;
 	private String name;
 	
-	public Teacher(int codeIn, String nameIn){
-		code = codeIn;
+	public Teacher(int idIn, String nameIn){
+		id = idIn;
 		name = nameIn;
 	}
 	
-	public int getCode(){
-		return code;
+	public int getId(){
+		return id;
 	}
 	
 	public String getName(){
