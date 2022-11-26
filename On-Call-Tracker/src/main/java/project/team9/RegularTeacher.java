@@ -2,7 +2,7 @@ package project.team9;
 //not sure if correct
 public class RegularTeacher extends Teacher{
 	
-	private Absences submittedAbsence;
+	private AbsenceRecord submittedAbsence;
 	private Schedule dailySchedule;
 	
 	//do we need a term tally
@@ -40,7 +40,7 @@ public class RegularTeacher extends Teacher{
 		absent = true;
 	}
 	
-	public void submitAbsenceSchedule(Absences submittedAbsenceIn){
+	public void submitAbsenceSchedule(AbsenceRecord submittedAbsenceIn){
 		if(absent){
 			submittedAbsence = submittedAbsenceIn;
 		}else {
@@ -48,7 +48,7 @@ public class RegularTeacher extends Teacher{
 		}
 	}
 
-	public Absences getSubmittedAbsence(){
+	public AbsenceRecord getSubmittedAbsence(){
 		return submittedAbsence;
 	}
 	
@@ -109,7 +109,6 @@ public class RegularTeacher extends Teacher{
 		
 		result += "\nMonth: " + monthlyTally + 
 				  "\nWeek: " + weeklyTally +
-				  "\nTerm: " + termTally + 
 				  "\nAssigned" + this.getAssigned();
 		return result;
 	}

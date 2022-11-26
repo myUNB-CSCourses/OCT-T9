@@ -20,6 +20,6 @@ public class Teacher{
 	}
 	
 	public String toString(){
-		return "ID: " +  code + " Name: " + name;
+		return "ID: " +  id + " Name: " + name;
 	}
 }

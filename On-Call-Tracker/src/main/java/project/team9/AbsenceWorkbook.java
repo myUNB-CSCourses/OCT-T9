@@ -1,7 +1,8 @@
-package FileReading;
+package project.team9;
 
 import java.io.File;  
-import java.io.FileInputStream;  
+import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Iterator;  
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -13,11 +14,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;  
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;  
 
-public class AbsenceWorkBook{
+public class AbsenceWorkbook{
 	private String line;
 	private int numCell;
 	private static String[] columns = {"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-	private static String[] 
 @SuppressWarnings("deprecation")
 
 public void workbookGen() {
@@ -36,10 +36,10 @@ public void workbookGen() {
 	
 }
 	
-public void workbookFill(Arraylist <Teacher>) {
+public void workbookFill(ArrayList<Teacher> teachers) {
 	
 }
-public void workbookReader()){
+public void workbookReader(){
 	
 	try{  
 		File file = new File("C:\\Users\\marno\\OneDrive\\Uni\\Year 2\\Sem 1\\CS2043\\D2\\InOutExcel MYL\\ExcelFile.xlsx");   //creating a new file instance. Add path to Excel File
