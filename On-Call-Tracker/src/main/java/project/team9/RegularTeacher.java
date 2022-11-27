@@ -15,8 +15,8 @@ public class RegularTeacher extends Teacher{
 	private boolean absent = false;
 	private boolean assigned = false;
 	
-	public RegularTeacher(int codeIn, String nameIn, Schedule dailyScheduleIn){
-		super(codeIn, nameIn);
+	public RegularTeacher(String nameIn, Schedule dailyScheduleIn){
+		super(nameIn);
 		dailySchedule = dailyScheduleIn;
 	}
 	

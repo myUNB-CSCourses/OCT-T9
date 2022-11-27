@@ -5,10 +5,12 @@ public class Teacher{
 
 	private int id;
 	private String name;
+	private static int unique = 100;
 	
-	public Teacher(int idIn, String nameIn){
-		id = idIn;
+	public Teacher(String nameIn){
+		id = unique;
 		name = nameIn;
+		unique++;
 	}
 	
 	public int getId(){
