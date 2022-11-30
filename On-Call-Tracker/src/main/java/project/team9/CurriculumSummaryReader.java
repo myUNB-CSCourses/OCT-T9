@@ -3,14 +3,16 @@ package project.team9;
 import java.io.FileInputStream;
 import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class CurriculumSummaryReader{
-    public static void main(String[] args){
 
+	@SuppressWarnings("deprecation")
+	public void curriculumReader() {
         try{
-            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("C:\\Program Files\\Java\\jdk1.8.0_241\\bin\\readExcelFiles\\CurriculumSummary.xlsx"));
+            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("/Users/dineth/repos/OCT-T9/On-Call-Tracker/src/inputs/CurriculumSummary.xlsx"));
             Iterator<Row> iterator =  workbook.getSheetAt(0).iterator();
             int  i = 0;
             while (iterator.hasNext()){
@@ -26,20 +28,20 @@ public class CurriculumSummaryReader{
                 
                 while (cellIterator.hasNext()){
                     Cell cell = cellIterator.next();
-                        if (cell.getCellType() == Cell.CELL_TYPE_STRING && counter == 0) {
+                        if (cell.getCellType() == CellType.STRING && counter == 0) {
                             System.out.println("Category: " + cell.getStringCellValue());
                             counter++;
-                        }else if (cell.getCellType() == Cell.CELL_TYPE_STRING && counter == 1) {
+                        }else if (cell.getCellType() == CellType.STRING && counter == 1) {
                             System.out.println("Course Code: " + cell.getStringCellValue());
                             counter++;
-                        }else if (cell.getCellType() == Cell.CELL_TYPE_STRING && counter == 2) {
+                        }else if (cell.getCellType() == CellType.STRING && counter == 2) {
                             System.out.println("Teachable: " + cell.getStringCellValue());
                             counter++;
-                        }else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC && counter == 3) {
-                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }else if (cell.getCellType() == CellType.NUMERIC && counter == 3) {
+                            cell.setCellType(CellType.STRING);
                             System.out.println("Grade: " + cell.getStringCellValue());
                             counter++;
-                        }else if (cell.getCellType() == Cell.CELL_TYPE_STRING && counter == 4) {
+                        }else if (cell.getCellType() == CellType.STRING && counter == 4) {
                             System.out.println("Pathway: " + cell.getStringCellValue());
                             counter++;
                         }
@@ -51,5 +53,6 @@ public class CurriculumSummaryReader{
            System.out.println("Exception");
            e.printStackTrace();
         }
-    }
+        
+	}
 }

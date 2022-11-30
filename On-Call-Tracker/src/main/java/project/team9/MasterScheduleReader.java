@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MasterScheduleReader {
+	@SuppressWarnings("deprecation")
 	public void masterReader() {
 		String teacherName = null;
 	    String Period1 = null;

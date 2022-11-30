@@ -3,9 +3,11 @@ package project.team9;
 public class Driver {
 
 	public static void main(String[] args) {
-		MasterScheduleReader read = new MasterScheduleReader();
+		MasterScheduleReader readMaster = new MasterScheduleReader();
 		
-		read.masterReader();
+		CurriculumSummaryReader readCourses = new CurriculumSummaryReader();
+		readCourses.curriculumReader();
+		//read.masterReader();
 
 	}
 
