@@ -31,6 +31,8 @@ public class TalleyBookReaderWriter {
 			while(itr.hasNext()) {
 				row = itr.next();
 				cellIterator = row.cellIterator();
+				
+				//Configurates the index variables so that the relevant information can easily be retrieved
 				if (configuration) {
 					int[] vars = configurate(sheet, day);
 					configuration = false;
@@ -88,6 +90,7 @@ public class TalleyBookReaderWriter {
 		}
 	}
 	
+	//Configurates the index variables so that the relevant information can easily be retrieved
 	public static int[] configurate(XSSFSheet sheet, int day) {
 		int[] vars = new int[5];
 		vars[4] = 0;
