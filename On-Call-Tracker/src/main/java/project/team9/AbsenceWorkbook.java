@@ -40,7 +40,7 @@ public void workbookGen() {
 public void workbookReader(String dayIn){
 	day = dayIn;
 	
-	try{  
+	try{
 		File file = new File("C:\\Fall 2022\\cs2043\\Git Repo\\OCT-T9\\On-Call-Tracker\\src\\inputs\\Absences.xlsx");   //creating a new file instance. Add path to Excel File
 		FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file  
 		//creating Workbook instance that refers to .xlsx file  
@@ -56,13 +56,13 @@ public void workbookReader(String dayIn){
 				switch (cell.getCellType()){
 				case STRING://field that represents string cell type
 					if(cell.getStringCellValue().equals(day)) {
-                		lastColumn = cell.getColumnIndex();
+                		int lastColumn = cell.getColumnIndex();
 					System.out.print(cell.getStringCellValue() + "\t\t\t");
+					}
 					break;
 				}
-				
+			System.out.println("");
 			}
-			System.out.println("");  
 		}
 	}
 	catch(Exception e){
@@ -73,7 +73,7 @@ public void workbookWriter() {
 	
 }
 public boolean checkSheetName(String sheetIn) {
-	if()
+	return false;
 }
 }
 
