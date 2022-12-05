@@ -10,7 +10,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class TalleyBookReaderWriter {
 
 	public void readTalleyCountDay(int day, String month){
-		boolean configuration = true;
 		Row row;
 		Cell cell;
 		Iterator<Cell> cellIterator;
@@ -27,61 +26,59 @@ public class TalleyBookReaderWriter {
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sheet = wb.getSheet(month);
 			Iterator<Row> itr = sheet.iterator();
+
+			//Configurates the index variables so that the relevant information can easily be retrieved
+			int[] vars = configurate(sheet, day);
+			monthlyIndex = vars[0];
+			totalIndex = vars[1];
+			remainingIndex = vars[2];
+			priorityIndex = vars[3];
+			dateIndex = vars[4];
+			System.out.println("monthlyIndex: " + monthlyIndex);
+			System.out.println("totalIndex: " + totalIndex);
+			System.out.println("remainingIndex: " + remainingIndex);
+			System.out.println("priorityIndex: " + priorityIndex);
+			System.out.println("dateIndex: " + dateIndex + "\n\n\n");
 			
 			while(itr.hasNext()) {
 				row = itr.next();
 				cellIterator = row.cellIterator();
 				
-				//Configurates the index variables so that the relevant information can easily be retrieved
-				if (configuration) {
-					int[] vars = configurate(sheet, day);
-					configuration = false;
-					monthlyIndex = vars[0];
-					totalIndex = vars[1];
-					remainingIndex = vars[2];
-					priorityIndex = vars[3];
-					dateIndex = vars[4];
-					System.out.println("monthlyIndex: " + monthlyIndex);
-					System.out.println("totalIndex: " + totalIndex);
-					System.out.println("remainingIndex: " + remainingIndex);
-					System.out.println("priorityIndex: " + priorityIndex);
-					System.out.println("dateIndex: " + dateIndex + "\n\n\n");
-				} else {
-					String title = row.getCell(1).getStringCellValue();
+				
+				String title = row.getCell(1).getStringCellValue();
 					
-					//If it reaches the summary at the end of the file
-					if (title.equals("Period 1") || title.equals("Period 2") || title.equals("Period 3") || title.equals("Period 4")) {
-						if (period == 4) {
-							System.out.println("\nTOTALS:");
-							System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
-							row = itr.next();
-							System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
-							row = itr.next();
-							System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
-							row = itr.next();
-							System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
-							row = itr.next();
-							System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
-							wb.close();
-							return;
-						}
-						period++;
-						System.out.println("------\nPERIOD " + period + "\n------\n");
-						
-					//Prints out a teacher entry
-					} else if (title != null && title.length() != 0) {
-						System.out.println("teacher: " + title + ":");
-						try {
-							System.out.println("period " + period + ": " + (int)row.getCell(dateIndex).getNumericCellValue());
-						}catch (Exception e) {
-							System.out.println("period " + period + ": 0");
-						}
-						
-						System.out.println("Monthly Total: " + (int)row.getCell(monthlyIndex).getNumericCellValue());
-						System.out.println("Total On Calls: " + (int)row.getCell(totalIndex).getNumericCellValue());
-						System.out.println("Remaining: " + (int)row.getCell(remainingIndex).getNumericCellValue());
-						System.out.println("Priority: " + (int)row.getCell(priorityIndex).getNumericCellValue() + "\n");
+				//If it reaches the summary at the end of the file
+				if (title.equals("Period 1") || title.equals("Period 2") || title.equals("Period 3") || title.equals("Period 4")) {
+					if (period == 4) {
+						System.out.println("\nTOTALS:");
+						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
+						row = itr.next();
+						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
+						row = itr.next();
+						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
+						row = itr.next();
+						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
+						row = itr.next();
+						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
+						wb.close();
+						return;
 					}
+					period++;
+					System.out.println("------\nPERIOD " + period + "\n------\n");
+					
+				//Prints out a teacher entry
+				} else if (title != null && title.length() != 0) {
+					System.out.println("teacher: " + title + ":");
+					try {
+						System.out.println("period " + period + ": " + (int)row.getCell(dateIndex).getNumericCellValue());
+					}catch (Exception e) {
+						System.out.println("period " + period + ": 0");
+					}
+					
+					System.out.println("Monthly Total: " + (int)row.getCell(monthlyIndex).getNumericCellValue());
+					System.out.println("Total On Calls: " + (int)row.getCell(totalIndex).getNumericCellValue());
+					System.out.println("Remaining: " + (int)row.getCell(remainingIndex).getNumericCellValue());
+					System.out.println("Priority: " + (int)row.getCell(priorityIndex).getNumericCellValue() + "\n");
 				}
 			}
 			
