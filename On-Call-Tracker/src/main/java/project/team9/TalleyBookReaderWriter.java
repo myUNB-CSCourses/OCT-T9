@@ -79,10 +79,11 @@ public class TalleyBookReaderWriter {
 					System.out.println("Priority: " + (int)row.getCell(priorityIndex).getNumericCellValue() + "\n");
 				}
 			}
-			
+			wb.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	//Configurates the index variables so that the relevant information can easily be retrieved

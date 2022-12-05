@@ -4,6 +4,7 @@ public class Course {
 	private final String code;
 	private String name;
 	private String room;
+	private boolean coverage;
 	
 	public Course (String code, String name, String room) {
 		this.code = code;
@@ -19,5 +20,11 @@ public class Course {
 	}
 	public String getRoom () {
 		return room;
+	}
+	public boolean getCoverage () {
+		return coverage;
+	}
+	public void assignCoverage(boolean coverage) {
+		this.coverage = coverage;
 	}
 }
