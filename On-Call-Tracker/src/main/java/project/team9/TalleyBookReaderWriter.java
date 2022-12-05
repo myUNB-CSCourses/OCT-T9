@@ -43,8 +43,6 @@ public class TalleyBookReaderWriter {
 			while(itr.hasNext()) {
 				row = itr.next();
 				cellIterator = row.cellIterator();
-				
-				
 				String title = row.getCell(1).getStringCellValue();
 					
 				//If it reaches the summary at the end of the file
