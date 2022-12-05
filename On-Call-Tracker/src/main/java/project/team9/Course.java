@@ -2,27 +2,32 @@ package project.team9;
 
 public class Course {
 	private final String code;
-	private String name;
+	private String teachable;
 	private String room;
 	private boolean coverage;
 	
-	public Course (String code, String name, String room) {
+	public Course (String code, String teachable) {
 		this.code = code;
-		this.name = name;
-		this.room = room;
+		this.teachable = teachable;
+		coverage = false;
+		room = "";
 	}
 	
 	public String getCode () {
 		return code;
 	}
-	public String getName () {
-		return name;
+	public String getTeachable () {
+		return teachable;
 	}
+	
 	public String getRoom () {
 		return room;
 	}
 	public boolean getCoverage () {
 		return coverage;
+	}
+	public void assignRoom(String room) {
+		this.room = room;
 	}
 	public void assignCoverage(boolean coverage) {
 		this.coverage = coverage;
