@@ -20,61 +20,116 @@ public class AbsenceWorkbook{
 	private int numCell;
 @SuppressWarnings("deprecation")
 
-public void workbookGen() {
-	Workbook workbook = new XSSFWorkbook();
-	Sheet sheet = workbook.createSheet("Absences");
+	public void workbookGen() {
+		Workbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet("Absences");
 	
-	Font headerFont = workbook.createFont();
-	headerFont.setBold(true);
-	headerFont.setFontHeightInPoints((short) 17);
-	headerFont.setColor(IndexedColors.RED.getIndex());
+		Font headerFont = workbook.createFont();
+		headerFont.setBold(true);
+		headerFont.setFontHeightInPoints((short) 17);
+		headerFont.setColor(IndexedColors.RED.getIndex());
 	
-	CellStyle headerCellStyle = workbook.createCellStyle();
-	headerCellStyle.setFont(headerFont);
+		CellStyle headerCellStyle = workbook.createCellStyle();
+		headerCellStyle.setFont(headerFont);
 	
-	Row headerRow = sheet.createRow(0);
+		Row headerRow = sheet.createRow(0);
 	
-}
+	}
 	
 
-public void workbookReader(String dayIn){
-	day = dayIn;
-	
-	try{
-		File file = new File("C:\\Fall 2022\\cs2043\\Git Repo\\OCT-T9\\On-Call-Tracker\\src\\inputs\\Absences.xlsx");   //creating a new file instance. Add path to Excel File
-		FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file  
-		//creating Workbook instance that refers to .xlsx file  
-		XSSFWorkbook wb = new XSSFWorkbook(fis);
+	public void workbookReader(String dayIn){
+		day = dayIn;
 		
-		XSSFSheet sheet = wb.getSheetAt(0);     //creating a Sheet object to retrieve object
-		Iterator<Row> itr = sheet.iterator();    //iterating over excel file
-		while (itr.hasNext()){
-			Row row = itr.next();
-			Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column
-			while (cellIterator.hasNext()){
-				Cell cell = cellIterator.next();
-				switch (cell.getCellType()){
-				case STRING://field that represents string cell type
-					if(cell.getStringCellValue().equals(day)) {
-                		int lastColumn = cell.getColumnIndex();
-					System.out.print(cell.getStringCellValue() + "\t\t\t");
+		int period1Ind = 0;
+		int period2Ind = 0;
+		int period3Ind = 0;
+		int period4Ind = 0;
+		
+		try{
+
+			File file = new File("C:\\Fall 2022\\cs2043\\Git Repo\\OCT-T9\\On-Call-Tracker\\src\\inputs\\Absences.xlsx");   //creating a new file instance. Add path to Excel File
+			FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file  
+			//creating Workbook instance that refers to .xlsx file  
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
+			XSSFSheet sheet = wb.getSheetAt(0);     //creating a Sheet object to retrieve object
+			Iterator<Row> itr = sheet.iterator();    //iterating over excel file
+		
+			int[] vars = configurate(sheet, day);
+			
+			period1Ind = vars[0];
+			period2Ind = vars[1];
+			period3Ind = vars[2];
+			period4Ind = vars[3];
+			
+			System.out.println("Day: " + day);
+			Row row =itr.next();
+			row =itr.next();
+			while (itr.hasNext()){
+				row = itr.next();
+				Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column
+				String teacherName = row.getCell(0).getStringCellValue();
+				if(teacherName.length() > 0) {
+					System.out.println("Teacher: " + teacherName);
+	
+					try {
+						System.out.println("Period 1: "+ row.getCell(period1Ind).getStringCellValue());
+					}catch (Exception e) {
+						System.out.println("Period 1: " + " ");
 					}
-					break;
-				}
-			System.out.println("");
+					try {
+						System.out.println( "Period 2: "+  row.getCell(period2Ind).getStringCellValue());
+					}catch (Exception e) {
+						System.out.println("Period 2: " + " ");
+					}
+					try {
+						System.out.println("Period 3: "+  row.getCell(period3Ind).getStringCellValue());	
+					}catch (Exception e) {
+						System.out.println("Period 3: " + " ");
+					}
+					try {
+						System.out.println("Period 4: "+  row.getCell(period4Ind).getStringCellValue());	
+					}catch (Exception e) {
+						System.out.println("Period 4: " + " ");
+					}
+				}	
+				
 			}
 		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
-	catch(Exception e){
-		e.printStackTrace();
-	}
-	}
-public void workbookWriter() {
+
+	public void workbookWriter() {
 	
-}
-public boolean checkSheetName(String sheetIn) {
-	return false;
-}
+	}
+	public static int[] configurate(XSSFSheet sheet, String day) {
+	    int[] vars = new int[4];
+	    Row row = sheet.getRow(0);
+	    Iterator<Cell> cellIterator = row.cellIterator();
+	
+	    int counter = 0;
+	    while(cellIterator.hasNext()) {
+	        Cell cell = cellIterator.next();
+	        switch (cell.getCellType()) {
+	        case STRING:
+	            if (cell.getStringCellValue().equals(day)) {
+	                vars[0] = cell.getColumnIndex();
+	                vars[1] = vars[0]+1;
+	                vars[2] = vars[1]+1;
+	                vars[3] = vars[2]+1;
+	               return vars;
+	            }
+	        default:
+	            break;
+	        }
+	    }
+	    return vars;
+	}
+	
+	
+	
+
 }
 
 
