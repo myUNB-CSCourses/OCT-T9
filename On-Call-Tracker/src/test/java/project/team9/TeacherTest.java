@@ -1,38 +1,49 @@
 package project.team9;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
+
 public class TeacherTest{
 
-Teacher teacher1;
-Teacher teacher2;
-Teacher teacher3;
-Teacher teacher4;
-Teacher teacher5;
-Teacher teacher6;
-Teacher teacher7;
-Teacher teacher8;
+RegularTeacher teacher1;
+RegularTeacher teacher2;
+RegularTeacher teacher3;
+RegularTeacher teacher4;
+RegularTeacher teacher5;
+RegularTeacher teacher6;
+
+Course course1;
+Course course2;
+Course course3;
+Course course4;
+
+
+Schedule schedule1;
+Schedule schedule2;
+Schedule schedule3;
+Schedule schedule4;
+Schedule schedule5;
+Schedule schedule6;
 
 	@BeforeEach
 	public void setUp() {
-		teacher1 = new CourseTest("Kendal Wilton");
-		teacher2 = new CourseTest("Cordell Warrick");
-		teacher3 = new CourseTest("Rudolph Boyce");
-		teacher4 = new CourseTest("Michael Karson");
-		teacher5 = new CourseTest("Kairo Fitz");
-		teacher6 = new CourseTest("Chauncey Nik");
-		teacher7 = new CourseTest("Marshall Joss");
-		teacher8 = new CourseTest("Vance Mervyn");
+		
+		course1 = new Course("Computer Science", "CS1083", "Computer Technology", "11", "University preparation");
+		course2 = new Course("Software Engineering", "CS2043", "Computer Technology", "15", "Workplace Preparation");
+		course3 = new Course("Technological Education", "TEJ3M", "Computer Engineering Technology", "10", "University/College Preparation");
+		course4 = new Course("Science", "SNC4E", "Science", "12", "Workplace Preparation");
+		
+		schedule1 = new Schedule(course1, course2, course3, course4);
+		
+		teacher1 = new RegularTeacher("Kendal Wilton", schedule1);
+		
 	}
 	
-		@AfterEach
+	@AfterEach
 	public void tearDown() {
-		teacher1.clearRating();
-		teacher2.clearRating();
-		teacher3.clearRating();
-		teacher4.clearRating();
-		teacher5.clearRating();
-		teacher6.clearRating();
-		teacher7.clearRating();
-		teacher8.clearRating();
+		
 	}
 	
 	@Test
@@ -40,6 +51,11 @@ Teacher teacher8;
 		String expectedName = "Kendal Wilton";
 		String nameResult = teacher1.getName();
 		assertEquals(expectedName, nameResult);
+		
+		int expectedCode = 100;
+		int resultCode = teacher1.getId();
+		assertEquals(expectedCode, resultCode);
+		
 	}
 
 
