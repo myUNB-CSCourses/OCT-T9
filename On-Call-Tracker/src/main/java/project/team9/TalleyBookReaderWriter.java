@@ -20,6 +20,12 @@ public class TalleyBookReaderWriter {
 		int remainingIndex = 0;
 		int priorityIndex = 0;
 		
+		int monthly;
+		int total;
+		int remaining;
+		int priority;
+		int tally;
+		
 		try {
 			File file = new File("C:\\Users\\marno\\OneDrive\\Uni\\Year 2\\Sem 1\\CS2043\\sandbox\\test\\src\\input\\On-call_Tallies.xlsx");
 			FileInputStream fis = new FileInputStream(file);
@@ -40,6 +46,7 @@ public class TalleyBookReaderWriter {
 			System.out.println("priorityIndex: " + priorityIndex);
 			System.out.println("dateIndex: " + dateIndex + "\n\n\n");
 			
+			row = itr.next();
 			while(itr.hasNext()) {
 				row = itr.next();
 				cellIterator = row.cellIterator();
@@ -66,17 +73,23 @@ public class TalleyBookReaderWriter {
 					
 				//Prints out a teacher entry
 				} else if (title != null && title.length() != 0) {
-					System.out.println("teacher: " + title + ":");
 					try {
-						System.out.println("period " + period + ": " + (int)row.getCell(dateIndex).getNumericCellValue());
+						tally = (int)row.getCell(dateIndex).getNumericCellValue();
 					}catch (Exception e) {
-						System.out.println("period " + period + ": 0");
+						tally = 0;
 					}
 					
-					System.out.println("Monthly Total: " + (int)row.getCell(monthlyIndex).getNumericCellValue());
-					System.out.println("Total On Calls: " + (int)row.getCell(totalIndex).getNumericCellValue());
-					System.out.println("Remaining: " + (int)row.getCell(remainingIndex).getNumericCellValue());
-					System.out.println("Priority: " + (int)row.getCell(priorityIndex).getNumericCellValue() + "\n");
+					monthly = (int)row.getCell(monthlyIndex).getNumericCellValue();
+					total = (int)row.getCell(totalIndex).getNumericCellValue();
+					remaining = (int)row.getCell(remainingIndex).getNumericCellValue();
+					priority = (int)row.getCell(priorityIndex).getNumericCellValue();
+					
+					System.out.println("teacher: " + title + ":");
+					System.out.println("period " + period + ": " + tally);
+					System.out.println("Monthly Total: " + monthly);
+					System.out.println("Total On Calls: " + total);
+					System.out.println("Remaining: " + remaining);
+					System.out.println("Priority: " + priority + "\n");
 				}
 			}
 			wb.close();
