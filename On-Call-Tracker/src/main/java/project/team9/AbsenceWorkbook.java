@@ -2,7 +2,6 @@ package project.team9;
 
 import java.io.File;  
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.Iterator;  
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -16,8 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class AbsenceWorkbook{
 	private String day;
-	private String sheet;
-	private int numCell;
+	private String week;
 @SuppressWarnings("deprecation")
 
 	public void workbookGen() {
@@ -39,6 +37,7 @@ public class AbsenceWorkbook{
 
 	public void workbookReader(String dayIn, String weekIn){
 		day = dayIn;
+		week = weekIn;
 		
 		int period1Ind = 0;
 		int period2Ind = 0;
@@ -51,7 +50,7 @@ public class AbsenceWorkbook{
 			FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file  
 			//creating Workbook instance that refers to .xlsx file  
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
-			XSSFSheet sheet = wb.getSheet(weekIn);     //creating a Sheet object to retrieve object
+			XSSFSheet sheet = wb.getSheet(week);     //creating a Sheet object to retrieve object
 			Iterator<Row> itr = sheet.iterator();    //iterating over excel file
 		
 			int[] vars = configurate(sheet, day);
@@ -66,7 +65,6 @@ public class AbsenceWorkbook{
 			row =itr.next();
 			while (itr.hasNext()){
 				row = itr.next();
-				Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column
 				String teacherName = row.getCell(0).getStringCellValue();
 				if(teacherName.length() > 0) {
 					System.out.println("Teacher: " + teacherName);
@@ -94,6 +92,7 @@ public class AbsenceWorkbook{
 				}	
 				
 			}
+			wb.close();
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -107,8 +106,6 @@ public class AbsenceWorkbook{
 	    int[] vars = new int[4];
 	    Row row = sheet.getRow(0);
 	    Iterator<Cell> cellIterator = row.cellIterator();
-	
-	    int counter = 0;
 	    while(cellIterator.hasNext()) {
 	        Cell cell = cellIterator.next();
 	        switch (cell.getCellType()) {
@@ -126,10 +123,4 @@ public class AbsenceWorkbook{
 	    }
 	    return vars;
 	}
-	
-	
-	
-
 }
-
-

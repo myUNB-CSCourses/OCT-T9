@@ -162,11 +162,15 @@ public class MasterScheduleReader {
 	Course matchCourse(String fullCode, ArrayList<Course> curr) {
 		Course course;
 		Course result = null;
-		String specialCode = fullCode.substring(0, 2);
+		if(fullCode.equals("X") || fullCode.equals("SPARE")){
+			return null;
+		}
+		String specialCode = fullCode.substring(0, 1);
 		String code;
 		boolean coverage = true;
 		
-		if (specialCode.equals("M-") || specialCode.equals("L-") || specialCode.equals("C-") || specialCode.equals("G-") || specialCode.equals("T-")) {
+		if (specialCode.equals("M-") || specialCode.equals("L-") || specialCode.equals("C-") || specialCode.equals("G-") || specialCode.equals("T-")
+				|| specialCode.equals("S-")) {
 			coverage = false;
 			code = fullCode;
 		} else {
@@ -180,7 +184,7 @@ public class MasterScheduleReader {
 					result.assignCoverage(coverage);
 					return result;
 				}	
-			} else if (code.equals(course.getCode().substring(1,5))){
+			} else if (code.equals(course.getCode().substring(0,4))){
 				result = course;
 				result.assignCoverage(coverage);
 				return result;
