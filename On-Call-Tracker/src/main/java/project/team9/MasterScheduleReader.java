@@ -135,16 +135,16 @@ public class MasterScheduleReader {
 		                    default:
 	                    }
 	                }
-	                System.out.println("Teacher Name: " + teacherName);
-	                System.out.println("Period 1: " + period1);
-	                System.out.println("Period 1 Room: " + p1Room);
-	                System.out.println("Period 2: " + period2);
-	                System.out.println("Period 2 Room: " + p2Room);
-	                System.out.println("Period 3: " + period3);
-	                System.out.println("Period 3 Room: " + p3Room);
-	                System.out.println("Period 4: " + period4);
-	                System.out.println("Period 4 Room: " + p4Room);
-	                System.out.println("");
+//	                System.out.println("Teacher Name: " + teacherName);
+//	                System.out.println("Period 1: " + period1);
+//	                System.out.println("Period 1 Room: " + p1Room);
+//	                System.out.println("Period 2: " + period2);
+//	                System.out.println("Period 2 Room: " + p2Room);
+//	                System.out.println("Period 3: " + period3);
+//	                System.out.println("Period 3 Room: " + p3Room);
+//	                System.out.println("Period 4: " + period4);
+//	                System.out.println("Period 4 Room: " + p4Room);
+//	                System.out.println("");
 	                
 	                p1 = matchCourse(period1, curr);
 	                p2 = matchCourse(period2, curr);
