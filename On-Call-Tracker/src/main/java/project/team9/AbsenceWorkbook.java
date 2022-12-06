@@ -37,7 +37,7 @@ public class AbsenceWorkbook{
 	}
 	
 
-	public void workbookReader(String dayIn){
+	public void workbookReader(String dayIn, String weekIn){
 		day = dayIn;
 		
 		int period1Ind = 0;
@@ -51,7 +51,7 @@ public class AbsenceWorkbook{
 			FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file  
 			//creating Workbook instance that refers to .xlsx file  
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
-			XSSFSheet sheet = wb.getSheetAt(0);     //creating a Sheet object to retrieve object
+			XSSFSheet sheet = wb.getSheet(weekIn);     //creating a Sheet object to retrieve object
 			Iterator<Row> itr = sheet.iterator();    //iterating over excel file
 		
 			int[] vars = configurate(sheet, day);
