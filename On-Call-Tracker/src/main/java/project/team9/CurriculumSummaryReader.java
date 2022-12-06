@@ -10,18 +10,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class CurriculumSummaryReader{
 
+	
 	@SuppressWarnings("deprecation")
-	public void curriculumReader() {
+	public ArrayList<Course> curriculumReader() {
+		ArrayList<Course> courses = new ArrayList<Course>();
+		String category = null;
+		String code = null;
+		String teachable = null;
+		String grade = null;
+		String pathway = null;
+		
         try{
             XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("/Users/dineth/repos/OCT-T9/On-Call-Tracker/src/inputs/CurriculumSummary.xlsx"));
             Iterator<Row> iterator =  workbook.getSheetAt(0).iterator();
-            int  i = 0;
             while (iterator.hasNext()){
                 int counter = 0;
                 Row row = iterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
-                System.out.println("Course " + i + ": ");
-                i++;
                 
                 //since the program is reading the header, we can read the excel file then store each column as an object and 
                 //loop through the array filled with the columns and we an ignore the first index of the array and 
@@ -29,31 +34,34 @@ public class CurriculumSummaryReader{
                 
                 while (cellIterator.hasNext()){
                     Cell cell = cellIterator.next();
-                        if (cell.getCellType() == CellType.STRING && counter == 0) {
-                            System.out.println("Category: " + cell.getStringCellValue());
+                    	if(cell.getCellType() == CellType.STRING && cell.getStringCellValue().equals("Category")) {
+                    		break;
+                    	}
+                    	else if (cell.getCellType() == CellType.STRING && counter == 0) {
+                            category = cell.getStringCellValue();
                             counter++;
                         }else if (cell.getCellType() == CellType.STRING && counter == 1) {
-                            System.out.println("Course Code: " + cell.getStringCellValue());
+                            code = cell.getStringCellValue();
                             counter++;
                         }else if (cell.getCellType() == CellType.STRING && counter == 2) {
-                            System.out.println("Teachable: " + cell.getStringCellValue());
+                            teachable = cell.getStringCellValue();
                             counter++;
                         }else if (cell.getCellType() == CellType.NUMERIC && counter == 3) {
                             cell.setCellType(CellType.STRING);
-                            System.out.println("Grade: " + cell.getStringCellValue());
+                            grade = cell.getStringCellValue();
                             counter++;
                         }else if (cell.getCellType() == CellType.STRING && counter == 4) {
-                            System.out.println("Pathway: " + cell.getStringCellValue());
+                            pathway = cell.getStringCellValue();
                             counter++;
                         }
                     }
-                System.out.println("-----------------------------------");
+                courses.add(new Course(category, code, teachable, grade, pathway));
                 }
         }
         catch(Exception e){
            System.out.println("Exception");
            e.printStackTrace();
         }
-        
+        return courses;
 	}
 }
