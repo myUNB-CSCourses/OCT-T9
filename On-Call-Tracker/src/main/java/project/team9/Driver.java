@@ -7,8 +7,8 @@ public class Driver {
 		MasterScheduleReader read = new MasterScheduleReader();
 		read.masterReader(courses.curriculumReader());
 		
-		AbsenceWorkbook readAB = new AbsenceWorkbook();
-		readAB.workbookReader("Monday", "Week1");
+		//AbsenceWorkbook readAB = new AbsenceWorkbook();
+		//readAB.workbookReader("Monday", "Week1");
 		
 		
 		

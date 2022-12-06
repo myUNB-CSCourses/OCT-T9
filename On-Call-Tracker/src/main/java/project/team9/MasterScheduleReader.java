@@ -13,6 +13,9 @@ public class MasterScheduleReader {
 	@SuppressWarnings("deprecation")
 	public ArrayList<RegularTeacher> masterReader(ArrayList<Course> curr) {
 		
+		ArrayList<String> problemCodes = new ArrayList<String>();
+		ArrayList<String> problemCodesLog = new ArrayList<String>();
+		
 		ArrayList<RegularTeacher> teachers = new ArrayList<RegularTeacher>();
 		Schedule schedule;
 	    Course p1;
@@ -147,6 +150,112 @@ public class MasterScheduleReader {
 	                p2 = matchCourse(period2, curr);
 	                p3 = matchCourse(period3, curr);
 	                p4 = matchCourse(period4, curr);
+
+	                //========================================================
+	                
+	                
+	                
+	                int index = 0;
+	                String piece;
+	                if (p1 == null) {
+	                	if (period1.equals("X") || period1.equals("SPARE") || period1.equals("M-1.00") || period1.equals("L-1.00") || period1.equals("C-1.00") || period1.equals("G-1.00") || period1.equals("T-1.00") || period1.equals("S-1.00")) {
+	                		
+	                	} else {
+	                		if (!problemCodes.contains(period1)) {
+	                			problemCodes.add(period1);
+	                			
+	                			if (period1.length() > 16) {
+	                				problemCodesLog.add("code: " + period1 + "\tteacher: " + teacherName + "[1]");
+	                			} else if (period1.length() > 9) {
+	                				problemCodesLog.add("code: " + period1 + "\t\tteacher: " + teacherName + "[1]");
+	                			} else if (period1.length() > 5) {
+	                				problemCodesLog.add("code: " + period1 + "\t\t\tteacher: " + teacherName + "[1]");
+	                			} else {
+	                				problemCodesLog.add("code: " + period1 + "\t\t\t\tteacher: " + teacherName + "[1]");
+	                			}
+	                		} else {
+	                			index = problemCodes.indexOf(period1);
+	                			piece = problemCodesLog.get(index) + ", " + teacherName + "[1]";
+	                			problemCodesLog.remove(index);
+	                			problemCodesLog.add(index, piece);
+	                		}
+	                	}
+	                }
+	                if (p2 == null) {
+	                	if (period2.equals("X") || period2.equals("SPARE") || period2.equals("M-1.00") || period2.equals("L-1.00") || period2.equals("C-1.00") || period2.equals("G-1.00") || period2.equals("T-1.00") || period2.equals("S-1.00")) {
+	                		
+	                	} else {
+	                		if (!problemCodes.contains(period2)) {
+	                			problemCodes.add(period2);
+	                			
+	                			if (period2.length() > 16) {
+	                				problemCodesLog.add("code: " + period2 + "\tteacher: " + teacherName + "[2]");
+	                			} else if (period2.length() > 9) {
+	                				problemCodesLog.add("code: " + period2 + "\t\tteacher: " + teacherName + "[2]");
+	                			} else if (period2.length() > 5) {
+	                				problemCodesLog.add("code: " + period2 + "\t\t\tteacher: " + teacherName + "[2]");
+	                			} else {
+	                				problemCodesLog.add("code: " + period2 + "\t\t\t\tteacher: " + teacherName + "[2]");
+	                			}
+	                		} else {
+	                			index = problemCodes.indexOf(period2);
+	                			piece = problemCodesLog.get(index) + ", " + teacherName + "[2]";
+	                			problemCodesLog.remove(index);
+	                			problemCodesLog.add(index, piece);
+	                		}
+	                	}
+	                }
+	                if (p3 == null) {
+	                	if (period3.equals("X") || period3.equals("SPARE") || period3.equals("M-1.00") || period3.equals("L-1.00") || period3.equals("C-1.00") || period3.equals("G-1.00") || period3.equals("T-1.00") || period3.equals("S-1.00")) {
+	                		
+	                	} else {
+	                		if (!problemCodes.contains(period3)) {
+	                			problemCodes.add(period3);
+	                			
+	                			if (period3.length() > 16) {
+	                				problemCodesLog.add("code: " + period3 + "\tteacher: " + teacherName + "[3]");
+	                			} else if (period3.length() > 9) {
+	                				problemCodesLog.add("code: " + period3 + "\t\tteacher: " + teacherName + "[3]");
+	                			} else if (period3.length() > 5) {
+	                				problemCodesLog.add("code: " + period3 + "\t\t\tteacher: " + teacherName + "[3]");
+	                			} else {
+	                				problemCodesLog.add("code: " + period3 + "\t\t\t\tteacher: " + teacherName + "[3]");
+	                			}
+	                		} else {
+	                			index = problemCodes.indexOf(period3);
+	                			piece = problemCodesLog.get(index) + ", " + teacherName + "[3]";
+	                			problemCodesLog.remove(index);
+	                			problemCodesLog.add(index, piece);
+	                		}
+	                	}
+	                }
+	                if (p4 == null) {
+	                	if (period4.equals("X") || period4.equals("SPARE") || period4.equals("M-1.00") || period4.equals("L-1.00") || period4.equals("C-1.00") || period4.equals("G-1.00") || period4.equals("T-1.00") || period4.equals("S-1.00")) {
+	                		
+	                	} else {
+	                		if (!problemCodes.contains(period4)) {
+	                			problemCodes.add(period4);
+	                			
+	                			if (period4.length() > 16) {
+	                				problemCodesLog.add("code: " + period4 + "\tteacher: " + teacherName + "[4]");
+	                			} else if (period4.length() > 9) {
+	                				problemCodesLog.add("code: " + period4 + "\t\tteacher: " + teacherName + "[4]");
+	                			} else if (period4.length() > 5) {
+	                				problemCodesLog.add("code: " + period4 + "\t\t\tteacher: " + teacherName + "[4]");
+	                			} else {
+	                				problemCodesLog.add("code: " + period4 + "\t\t\t\tteacher: " + teacherName + "[4]");
+	                			}
+	                		} else {
+	                			index = problemCodes.indexOf(period4);
+	                			piece = problemCodesLog.get(index) + ", " + teacherName + "[4]";
+	                			problemCodesLog.remove(index);
+	                			problemCodesLog.add(index, piece);
+	                		}
+	                	}
+	                }
+	                //========================================================
+	                
+	                
 	                schedule = new Schedule(p1, p2 ,p3 ,p4);
 	                teachers.add(new RegularTeacher(teacherName, schedule));
 	            }
@@ -154,6 +263,17 @@ public class MasterScheduleReader {
 	        catch(Exception e){
 	            e.printStackTrace();
 	        }
+		
+        //========================================================
+		problemCodesLog.sort(null);
+		System.out.println("\n\n\n====================\n");
+		for(int i=0; i<problemCodesLog.size(); i++) {
+			System.out.println(problemCodesLog.get(i));
+		}
+		System.out.println("\n====================\n\n\n");
+        //========================================================
+		
+		
 		return teachers;
 	}
 
