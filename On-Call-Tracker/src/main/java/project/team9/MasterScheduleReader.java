@@ -156,6 +156,8 @@ public class MasterScheduleReader {
 		return teachers;
 	}
 
+	//Returns a course that it receives by matching a course-code from the MasterSchedule excel file to the 
+	//codes that the courses in the curr[iculum] arrayList have from the CurriculumSummary excel file
 	private Course matchCourse(String fullCode, ArrayList<Course> curr) {
 		Course course;
 		Course result = null;
