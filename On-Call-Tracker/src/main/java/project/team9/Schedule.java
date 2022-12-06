@@ -14,16 +14,16 @@ public class Schedule {
 	public Schedule(Course period1In, Course period2In, Course period3In, Course period4In) {
 		period1 = period1In;
 		period2 = period2In;
-		period2 = period3In;
-		period2 = period4In;
+		period3 = period3In;
+		period4 = period4In;
 	}
 	
 	
 	public Schedule(Course period1In, Course period2In, Course period3In, Course period4In, String p1RoomIn, String p2RoomIn, String p3RoomIn, String p4RoomIn) {
 		period1 = period1In;
 		period2 = period2In;
-		period2 = period3In;
-		period2 = period4In;
+		period3 = period3In;
+		period4 = period4In;
 		p1Room = p1RoomIn;
 		p2Room = p2RoomIn;
 		p3Room = p3RoomIn;
