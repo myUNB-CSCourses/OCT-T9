@@ -1,9 +1,11 @@
 package project.team9;
 import java.io.File;  
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Iterator;  
 import org.apache.poi.ss.usermodel.Cell;  
-import org.apache.poi.ss.usermodel.Row;  
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;  
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;  
 
@@ -11,8 +13,6 @@ public class TalleyBookReaderWriter {
 
 	public void readTalleyCountDay(int day, String month){
 		Row row;
-		Cell cell;
-		Iterator<Cell> cellIterator;
 		int period = 0;
 		int dateIndex = 0;
 		int monthlyIndex = 0;
@@ -50,7 +50,6 @@ public class TalleyBookReaderWriter {
 			row = itr.next();
 			while(itr.hasNext()) {
 				row = itr.next();
-				cellIterator = row.cellIterator();
 				String title = row.getCell(1).getStringCellValue();
 					
 				//If it reaches the summary at the end of the file
@@ -100,26 +99,123 @@ public class TalleyBookReaderWriter {
 		
 	}
 	
+
+	//Changes the tally of the selected teacher if they are on the tally book.
+	//Returns true if the teacher was found and their tally could be changed.
+	//Returns false if the tally couldn't be changed or the teacher couldn't be found
+	public boolean updateTeacherTally(String teacherNameIn, String monthIn, int dayIn, int periodIn, boolean tallyIn) {
+		String period = "Period " + periodIn;
+		String teacherName = teacherNameIn;
+		String month = monthIn;
+		int day = dayIn;
+		boolean tally = tallyIn;
+		
+		Row row;
+		int dateIndex = 0;
+		int monthlyIndex = 0;
+		int totalIndex = 0;
+		int remainingIndex = 0;
+		int priorityIndex = 0;
+		int totalsRowIndex = 0;
+		
+		try {
+			ConfigFileReader config = new ConfigFileReader();
+			File file = new File(config.configRead("ON_CALL_TALLIES"));
+			FileInputStream fis = new FileInputStream(file);
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
+			XSSFSheet sheet = wb.getSheet(month);
+			Iterator<Row> itr = sheet.iterator();
+
+			//Configurates the index variables so that the relevant information can easily be retrieved
+			int[] vars = configurate(sheet, day);
+			monthlyIndex = vars[0];
+			totalIndex = vars[1];
+			remainingIndex = vars[2];
+			priorityIndex = vars[3];
+			dateIndex = vars[4];
+			totalsRowIndex = vars[5];
+			
+			row = itr.next();
+			String title = row.getCell(1).getStringCellValue();
+			//loops until it finds the period
+			while(itr.hasNext() && !title.equals(period)) {
+				row = itr.next();
+				title = row.getCell(1).getStringCellValue();
+			}
+			//Checks if it found the correct period
+			if (title.equals(period)) {
+				//loops until it finds the teacher
+				//Will then edit the necessary tally
+				while(itr.hasNext()) {
+					row = itr.next();
+					title = row.getCell(1).getStringCellValue();
+					if (title.equals(teacherName)) {
+						System.out.println("==========\nFound Teacher: " + title + "[" + dateIndex + ", " + row.getRowNum() + "]");
+						
+						if (row.getCell(dateIndex) == null) {
+							System.out.println("Cell is null. no more");
+							row.createCell(dateIndex).setCellValue(0);
+						}
+						if (tally && row.getCell(remainingIndex).getNumericCellValue() > 0) {
+							System.out.println("making 1");
+							row.getCell(dateIndex).setCellValue(1);
+							System.out.println("cell: " + row.getCell(dateIndex).getNumericCellValue());
+						} else if (!tally) {
+							System.out.println("Trying to make blank");
+							row.createCell(dateIndex);
+						} else {
+							System.out.println("Can't make 1");
+						}
+						break;
+					}
+				}
+				
+				//Updates the cells in the sheet that would've possibly changed after the alteration of the sheet
+				XSSFFormulaEvaluator formulaEvaluator = wb.getCreationHelper().createFormulaEvaluator();
+				formulaEvaluator.evaluateFormulaCell(row.getCell(remainingIndex));
+				formulaEvaluator.evaluateFormulaCell(row.getCell(monthlyIndex));
+				formulaEvaluator.evaluateFormulaCell(row.getCell(totalIndex));
+				formulaEvaluator.evaluateFormulaCell(row.getCell(priorityIndex));
+				row = sheet.getRow(totalsRowIndex);
+				formulaEvaluator.evaluateFormulaCell(sheet.getRow(totalsRowIndex).getCell(monthlyIndex));
+				formulaEvaluator.evaluateFormulaCell(sheet.getRow(totalsRowIndex).getCell(totalIndex));
+				formulaEvaluator.evaluateFormulaCell(sheet.getRow(totalsRowIndex+1).getCell(2));
+				formulaEvaluator.evaluateFormulaCell(sheet.getRow(totalsRowIndex+2).getCell(2));
+				formulaEvaluator.evaluateFormulaCell(sheet.getRow(totalsRowIndex+3).getCell(2));
+				formulaEvaluator.evaluateFormulaCell(sheet.getRow(totalsRowIndex+4).getCell(2));
+				formulaEvaluator.evaluateFormulaCell(sheet.getRow(totalsRowIndex+5).getCell(2));
+				
+				
+				fis.close();
+				FileOutputStream fos = new FileOutputStream(file);
+				wb.write(fos);
+				fos.close();
+				
+			}
+			wb.close();
+		} catch (Exception e) {
+						e.printStackTrace();
+		}
+		return false;
+	}
+	
 	//Configurates the index variables so that the relevant information can easily be retrieved
 	public static int[] configurate(XSSFSheet sheet, int day) {
-		int[] vars = new int[5];
+		int[] vars = new int[6];
 		vars[4] = 0;
 		Row row = sheet.getRow(0);
+		Iterator<Row> itr = sheet.rowIterator();
 		Iterator<Cell> cellIterator = row.cellIterator();
 
-		int counter = 0;
 		while(cellIterator.hasNext()) {
 			Cell cell = cellIterator.next();
-			System.out.println(counter ++);
+			//System.out.println(counter ++);
 			switch (cell.getCellType()) {
 			case STRING:
-				System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getStringCellValue() + ")");
+				//System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getStringCellValue() + ")");
 				switch (cell.getStringCellValue()){
 				case "Monthly \nEnd Total":
 					vars[0] = cell.getColumnIndex();
-					if (vars[4] != 0) {
-						return vars;
-					}
 					break;
 				case "Total \nOn Calls":
 					vars[1] = cell.getColumnIndex();
@@ -137,13 +233,35 @@ public class TalleyBookReaderWriter {
 				}
 				break;
 			case NUMERIC:
-				System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getNumericCellValue() + ")");
+				//System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getNumericCellValue() + ")");
 				if (cell.getNumericCellValue() == day) {
 					vars[4] = cell.getColumnIndex();
 				}
 				break;
 			default:
 				break;
+			}
+		}
+		
+		//Saves the row index value of the "Totals" block at the very end of the sheet
+		boolean finalStretch = false;
+		while (itr.hasNext()) {
+			row = itr.next();
+			try {
+				switch (row.getCell(1).getCellType()) {
+				case STRING:
+					if (row.getCell(1).getStringCellValue().equals("Period 1")) {
+						if (finalStretch) {
+							vars[5] = row.getRowNum() -1;
+						} else {
+							finalStretch = true;
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			} catch (Exception e){
 			}
 		}
 		return vars;

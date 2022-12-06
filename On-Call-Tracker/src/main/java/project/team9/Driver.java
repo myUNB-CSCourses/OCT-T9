@@ -7,15 +7,14 @@ public class Driver {
 		MasterScheduleReader read = new MasterScheduleReader();
 		read.masterReader(courses.curriculumReader());
 		
-		//AbsenceWorkbook readAB = new AbsenceWorkbook();
-		//readAB.workbookReader("Monday", "Week1");
+		AbsenceWorkbook readAB = new AbsenceWorkbook();
+		readAB.workbookReader("Monday", "Week1");
 		
 		
 		
-//		for(Course var : courses.curriculumReader()) {
-//			System.out.println(var + "\n");
-//			
-//		}
+		for(Course var : courses.curriculumReader()) {
+			System.out.println(var + "\n");
+		}
 
 		
 		Course course1 = new Course("categoryIn", "codeIn", "teachableIn", "gradeIn", "pathwayIn");
@@ -24,5 +23,10 @@ public class Driver {
 		
 		System.out.println(t1.getId());
 		
+		TalleyBookReaderWriter tally = new TalleyBookReaderWriter();
+		tally.readTalleyCountDay(8, "Month1");
+		tally.updateTeacherTally("Shuhui Xu", "Month1", 8, 4, true);
+		tally.readTalleyCountDay(8, "Month1");
+		tally.updateTeacherTally("Shuhui Xu", "Month1", 8, 4, false); //please make sure to undo changes so that the excel files as synched up between our members
 	}
 }
