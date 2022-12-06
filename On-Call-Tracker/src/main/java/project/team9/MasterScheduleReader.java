@@ -159,7 +159,7 @@ public class MasterScheduleReader {
 
 	//Returns a course that it receives by matching a course-code from the MasterSchedule excel file to the 
 	//codes that the courses in the curr[iculum] arrayList have from the CurriculumSummary excel file
-	private Course matchCourse(String fullCode, ArrayList<Course> curr) {
+	Course matchCourse(String fullCode, ArrayList<Course> curr) {
 		Course course;
 		Course result = null;
 		String specialCode = fullCode.substring(0, 2);
@@ -170,17 +170,18 @@ public class MasterScheduleReader {
 			coverage = false;
 			code = fullCode;
 		} else {
-			code = fullCode.substring(0, 6);
+			code = fullCode.substring(0, 5);
 		}
 		for(int i=0; i<curr.size(); i++) {
 			course = curr.get(i);
 			if (course.getCode().length() > 3) {
-				if (code.equals(curr.get(i).getCode().substring(0, 6))) {
+				if (code.equals(curr.get(i).getCode().substring(0, 5))) {
 					result = course;
 					result.assignCoverage(coverage);
 					return result;
 				}	
-			} else if (code.equals(course.getCode().substring(0,3))){
+			} else if (code.equals(course.getCode().substring(1,5))){
+				result = course;
 				result.assignCoverage(coverage);
 				return result;
 			}

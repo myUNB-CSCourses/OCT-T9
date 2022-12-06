@@ -26,6 +26,12 @@ public class Course {
 	public String getTeachable () {
 		return teachable;
 	}
+	public String getGrade() {
+		return grade;
+	}
+	public String getPathway() {
+		return pathway;
+	}
 	public boolean getCoverage () {
 		return coverage;
 	}
@@ -33,6 +39,8 @@ public class Course {
 		this.coverage = coverage;
 	}
 	public String toString() {
-		return "Category: " + category + "\nCode: " + code + "\nTeachable: " + "\nGrade: " + grade + "\nPathway: " + pathway;
+		String result = "Category: " + getCategory() + "\nCode: " + getCode() 
+				+ "\nTeachable: " + getTeachable() + "\nGrade: " + getGrade() + "\nPathway: " + getPathway();
+		return result;
 	}
 }
