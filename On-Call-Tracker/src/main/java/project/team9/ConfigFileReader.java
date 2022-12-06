@@ -11,12 +11,11 @@ public class ConfigFileReader {
 		try {
 			FileInputStream ip = new FileInputStream("/Users/dineth/repos/OCT-T9/On-Call-Tracker/src/config.properties");
 			prop.load(ip);
-			System.out.println(prop.getProperty(key));
 			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "Sdfs";
+		return prop.getProperty(key);
 	}
 }

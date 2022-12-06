@@ -27,7 +27,8 @@ public class TalleyBookReaderWriter {
 		int tally;
 		
 		try {
-			File file = new File("C:\\Users\\marno\\OneDrive\\Uni\\Year 2\\Sem 1\\CS2043\\sandbox\\test\\src\\input\\On-call_Tallies.xlsx");
+			ConfigFileReader config = new ConfigFileReader();
+			File file = new File(config.configRead("ON_CALL_TALLIES"));
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sheet = wb.getSheet(month);

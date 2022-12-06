@@ -21,7 +21,10 @@ public class CurriculumSummaryReader{
 		String pathway = null;
 		
         try{
-            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("/Users/dineth/repos/OCT-T9/On-Call-Tracker/src/inputs/CurriculumSummary.xlsx"));
+        	ConfigFileReader config = new ConfigFileReader();
+        	
+            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(config.configRead("CURRICULUM_SUMMARY")));
+            
             Iterator<Row> iterator =  workbook.getSheetAt(0).iterator();
             while (iterator.hasNext()){
                 int counter = 0;
@@ -55,7 +58,9 @@ public class CurriculumSummaryReader{
                             counter++;
                         }
                     }
-                courses.add(new Course(category, code, teachable, grade, pathway));
+	                if(category != null) {
+	                	courses.add(new Course(category, code, teachable, grade, pathway));
+	                }
                 }
         }
         catch(Exception e){

@@ -46,8 +46,8 @@ public class AbsenceWorkbook{
 		int period4Ind = 0;
 		
 		try{
-
-			File file = new File("C:\\Fall 2022\\cs2043\\Git Repo\\OCT-T9\\On-Call-Tracker\\src\\inputs\\Absences.xlsx");   //creating a new file instance. Add path to Excel File
+			ConfigFileReader config = new ConfigFileReader();
+			File file = new File(config.configRead("ABSENCE_WORKBOOK"));   //creating a new file instance. Add path to Excel File
 			FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file  
 			//creating Workbook instance that refers to .xlsx file  
 			XSSFWorkbook wb = new XSSFWorkbook(fis);

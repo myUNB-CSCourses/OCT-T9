@@ -32,9 +32,10 @@ public class MasterScheduleReader {
 	    String p4Room = null;
 	    
 		try {
+				ConfigFileReader config = new ConfigFileReader();
 				int lastColumn = 100;
 				boolean end = true;
-	            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("/Users/dineth/repos/OCT-T9/On-Call-Tracker/src/inputs/MasterSchedule.xlsx"));
+	            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(config.configRead("MASTER_SCHEDULE")));
 	            Iterator<Row> iterator =  workbook.getSheetAt(0).iterator();
 	            Row row = iterator.next();
 	            while (iterator.hasNext() && end) {
