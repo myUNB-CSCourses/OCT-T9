@@ -1,6 +1,7 @@
 package project.team9;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -10,16 +11,25 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MasterScheduleReader {
 	@SuppressWarnings("deprecation")
-	public void masterReader() {
+	public ArrayList<RegularTeacher> masterReader(ArrayList<Course> curr) {
+		
+		ArrayList<RegularTeacher> teachers = new ArrayList<RegularTeacher>();
+		Schedule schedule;
+	    Course p1;
+	    Course p2;
+	    Course p3;
+	    Course p4;
+	    
+	    
 		String teacherName = null;
-	    String Period1 = null;
-	    String Period2 = null;
-	    String Period3 = null;
-	    String Period4 = null;
-	    String P1R = null;
-	    String P2R = null;
-	    String P3R = null;
-	    String P4R = null;
+	    String period1 = null;
+	    String period2 = null;
+	    String period3 = null;
+	    String period4 = null;
+	    String p1Room = null;
+	    String p2Room = null;
+	    String p3Room = null;
+	    String p4Room = null;
 	    
 		try {
 				int lastColumn = 100;
@@ -53,90 +63,125 @@ public class MasterScheduleReader {
 		                    		teacherName = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 1) {
-		                    		Period1 = cell.getStringCellValue();
+		                    		period1 = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 2) {
-		                    		P1R = cell.getStringCellValue();
+		                    		p1Room = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 3) {
-		                    		Period2 = cell.getStringCellValue();
+		                    		period2 = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 4) {
-		                    		P2R = cell.getStringCellValue();
+		                    		p2Room = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 5) {
-		                    		Period3 = cell.getStringCellValue();
+		                    		period3 = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 6) {
-		                    		P3R = cell.getStringCellValue();
+		                    		p3Room = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 7) {
-		                    		Period4 = cell.getStringCellValue();
+		                    		period4 = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 8) {
-		                    		P4R = cell.getStringCellValue();
+		                    		p4Room = cell.getStringCellValue();
 		                    	}
 		                        break;
 		                    case NUMERIC:
 		                        cell.setCellType(CellType.STRING);
 		                        if(cell.getColumnIndex() == 2) {
-		                    		P1R = cell.getStringCellValue();
+		                    		p1Room = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 4) {
-		                    		P2R = cell.getStringCellValue();
+		                    		p2Room = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 6) {
-		                    		P3R = cell.getStringCellValue();
+		                    		p3Room = cell.getStringCellValue();
 		                    	}
 		                    	else if(cell.getColumnIndex() == 8) {
-		                    		P4R = cell.getStringCellValue();
+		                    		p4Room = cell.getStringCellValue();
 		                    	}
 		                        break;
 		                    case BLANK:
 		                    	if(cell.getColumnIndex() == 2) {
-		                    		P1R = "NO ROOM";
+		                    		p1Room = "NO ROOM";
 		                    	}
 		                    	else if(cell.getColumnIndex() == 4) {
-		                    		P2R = "NO ROOM";
+		                    		p2Room = "NO ROOM";
 		                    	}
 		                    	else if(cell.getColumnIndex() == 6) {
-		                    		P3R = "NO ROOM";
+		                    		p3Room = "NO ROOM";
 		                    	}
 		                    	else if(cell.getColumnIndex() == 8) {
-		                    		P4R = "NO ROOM";
+		                    		p4Room = "NO ROOM";
 		                    	}
 		                    	else if(cell.getColumnIndex() == 1) {
-		                    		Period1 = "SPARE";
+		                    		period1 = "SPARE";
 		                    	}
 		                    	else if(cell.getColumnIndex() == 3) {
-		                    		Period2 = "SPARE";
+		                    		period2 = "SPARE";
 		                    	}
 		                    	else if(cell.getColumnIndex() == 5) {
-		                    		Period3 = "SPARE";
+		                    		period3 = "SPARE";
 		                    	}
 		                    	else if(cell.getColumnIndex() == 7) {
-		                    		Period4 = "SPARE";
+		                    		period4 = "SPARE";
 		                    	}
 		                        break;
 		                    default:
 	                    }
 	                }
 	                System.out.println("Teacher Name: " + teacherName);
-	                System.out.println("Period 1: " + Period1);
-	                System.out.println("Period 1 Room: " + P1R);
-	                System.out.println("Period 2: " + Period2);
-	                System.out.println("Period 2 Room: " + P2R);
-	                System.out.println("Period 3: " + Period3);
-	                System.out.println("Period 3 Room: " + P3R);
-	                System.out.println("Period 4: " + Period4);
-	                System.out.println("Period 4 Room: " + P4R);
+	                System.out.println("Period 1: " + period1);
+	                System.out.println("Period 1 Room: " + p1Room);
+	                System.out.println("Period 2: " + period2);
+	                System.out.println("Period 2 Room: " + p2Room);
+	                System.out.println("Period 3: " + period3);
+	                System.out.println("Period 3 Room: " + p3Room);
+	                System.out.println("Period 4: " + period4);
+	                System.out.println("Period 4 Room: " + p4Room);
 	                System.out.println("");
+	                
+	                p1 = matchCourse(period1, curr);
+	                p2 = matchCourse(period2, curr);
+	                p3 = matchCourse(period3, curr);
+	                p4 = matchCourse(period4, curr);
+	                schedule = new Schedule(p1, p2 ,p3 ,p4);
+	                teachers.add(new RegularTeacher(teacherName, schedule));
 	            }
-
-	           
 	        }
 	        catch(Exception e){
 	            e.printStackTrace();
 	        }
+		return teachers;
+	}
+
+	private Course matchCourse(String fullCode, ArrayList<Course> curr) {
+		Course course;
+		Course result = null;
+		String specialCode = fullCode.substring(0, 2);
+		String code;
+		boolean coverage = true;
+		
+		if (specialCode.equals("M-") || specialCode.equals("L-") || specialCode.equals("C-") || specialCode.equals("G-") || specialCode.equals("T-")) {
+			coverage = false;
+			code = fullCode;
+		} else {
+			code = fullCode.substring(0, 6);
+		}
+		for(int i=0; i<curr.size(); i++) {
+			course = curr.get(i);
+			if (course.getCode().length() > 3) {
+				if (code.equals(curr.get(i).getCode().substring(0, 6))) {
+					result = course;
+					result.assignCoverage(coverage);
+					return result;
+				}	
+			} else if (code.equals(course.getCode().substring(0,3))){
+				result.assignCoverage(coverage);
+				return result;
+			}
+		}
+		return result;
 	}
 }
