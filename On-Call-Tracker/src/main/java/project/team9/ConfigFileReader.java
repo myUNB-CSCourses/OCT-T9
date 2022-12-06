@@ -9,7 +9,7 @@ public class ConfigFileReader {
 		Properties prop=new Properties();
 		
 		try {
-			FileInputStream ip = new FileInputStream("/Users/dineth/repos/OCT-T9/On-Call-Tracker/src/config.properties");
+			FileInputStream ip = new FileInputStream("src/config.properties");
 			prop.load(ip);
 			
 		}
