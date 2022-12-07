@@ -2,6 +2,7 @@ package project.team9;
 
 import java.io.File;  
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Iterator;  
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -35,7 +36,8 @@ public class AbsenceWorkbook{
 	}
 	
 
-	public void workbookReader(String dayIn, String weekIn){
+	public ArrayList<AbsenceRecord> workbookReader(String dayIn, String weekIn){
+		ArrayList<AbsenceRecord> record = new ArrayList<AbsenceRecord>();
 		day = dayIn;
 		week = weekIn;
 		
@@ -43,6 +45,8 @@ public class AbsenceWorkbook{
 		int period2Ind = 0;
 		int period3Ind = 0;
 		int period4Ind = 0;
+		
+		
 		
 		try{
 			ConfigFileReader config = new ConfigFileReader();
@@ -60,43 +64,62 @@ public class AbsenceWorkbook{
 			period3Ind = vars[2];
 			period4Ind = vars[3];
 			
-			System.out.println("Day: " + day);
+//			System.out.println("Day: " + day);
 			Row row =itr.next();
 			row =itr.next();
 			while (itr.hasNext()){
+				String period1 = null;
+				String period2 = null;
+				String period3 = null;
+				String period4 = null;
 				row = itr.next();
 				String teacherName = row.getCell(0).getStringCellValue();
 				if(teacherName.length() > 0) {
-					System.out.println("Teacher: " + teacherName);
+//					System.out.println("Teacher: " + teacherName);
 	
 					try {
-						System.out.println("Period 1: "+ row.getCell(period1Ind).getStringCellValue());
+						period1 = row.getCell(period1Ind).getStringCellValue();
 					}catch (Exception e) {
 						System.out.println("Period 1: " + " ");
 					}
 					try {
-						System.out.println( "Period 2: "+  row.getCell(period2Ind).getStringCellValue());
+						period2 = row.getCell(period2Ind).getStringCellValue();
 					}catch (Exception e) {
 						System.out.println("Period 2: " + " ");
 					}
 					try {
-						System.out.println("Period 3: "+  row.getCell(period3Ind).getStringCellValue());	
+						period3 =  row.getCell(period3Ind).getStringCellValue();	
 					}catch (Exception e) {
 						System.out.println("Period 3: " + " ");
 					}
 					try {
-						System.out.println("Period 4: "+  row.getCell(period4Ind).getStringCellValue());	
+						period4 =  row.getCell(period4Ind).getStringCellValue();	
 					}catch (Exception e) {
 						System.out.println("Period 4: " + " ");
 					}
 				}	
-				
+				if(period1 != null || period2 != null || period3 != null || period4 != null) {
+					if(period1 == null) {
+						period1 = "NA";
+					}
+					if(period2 == null) {
+						period2 = "NA";
+					}
+					if(period3 == null) {
+						period3 = "NA";
+					}
+					if(period4 == null) {
+						period4 = "NA";
+					}
+					record.add(new AbsenceRecord(teacherName, day, week, period1, period2, period3, period4));
+				}
 			}
 			wb.close();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		return record;
 	}
 
 	public void workbookWriter() {

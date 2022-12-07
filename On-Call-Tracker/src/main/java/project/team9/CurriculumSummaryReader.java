@@ -34,7 +34,6 @@ public class CurriculumSummaryReader{
                 //since the program is reading the header, we can read the excel file then store each column as an object and 
                 //loop through the array filled with the columns and we an ignore the first index of the array and 
                 //print the rest.
-                
                 while (cellIterator.hasNext()){
                     Cell cell = cellIterator.next();
                     	if(cell.getCellType() == CellType.STRING && cell.getStringCellValue().equals("Category")) {

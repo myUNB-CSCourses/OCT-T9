@@ -266,11 +266,11 @@ public class MasterScheduleReader {
 		
         //========================================================
 		problemCodesLog.sort(null);
-		System.out.println("\n\n\n====================\n");
-		for(int i=0; i<problemCodesLog.size(); i++) {
-			System.out.println(problemCodesLog.get(i));
-		}
-		System.out.println("\n====================\n\n\n");
+//		System.out.println("\n\n\n====================\n");
+//		for(int i=0; i<problemCodesLog.size(); i++) {
+//			System.out.println(problemCodesLog.get(i));
+//		}
+//		System.out.println("\n====================\n\n\n");
         //========================================================
 		
 		
