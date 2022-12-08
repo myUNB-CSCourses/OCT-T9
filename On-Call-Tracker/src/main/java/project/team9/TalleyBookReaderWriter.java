@@ -72,7 +72,7 @@ public class TalleyBookReaderWriter {
 						row = itr.next();
 //						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
 						wb.close();
-						System.out.println("Closing early");
+//						System.out.println("Closing early");
 						break;
 					}
 					period++;
@@ -116,10 +116,10 @@ public class TalleyBookReaderWriter {
 					
 				}
 			}
-			System.out.println("period1[" + period1.size() + "]: " + period1);
-			System.out.println("period2[" + period2.size() + "]: " + period2);
-			System.out.println("period3[" + period3.size() + "]: " + period3);
-			System.out.println("period4[" + period4.size() + "]: " + period4);
+//			System.out.println("period1[" + period1.size() + "]: " + period1);
+//			System.out.println("period2[" + period2.size() + "]: " + period2);
+//			System.out.println("period3[" + period3.size() + "]: " + period3);
+//			System.out.println("period4[" + period4.size() + "]: " + period4);
 			allPeriods.add(period1);
 			allPeriods.add(period2);
 			allPeriods.add(period3);
@@ -183,21 +183,21 @@ public class TalleyBookReaderWriter {
 					row = itr.next();
 					title = row.getCell(1).getStringCellValue();
 					if (title.equals(teacherName)) {
-						System.out.println("==========\nFound Teacher: " + title + "[" + dateIndex + ", " + row.getRowNum() + "]");
+//						System.out.println("==========\nFound Teacher: " + title + "[" + dateIndex + ", " + row.getRowNum() + "]");
 						
 						if (row.getCell(dateIndex) == null) {
-							System.out.println("Cell is null. no more");
+//							System.out.println("Cell is null. no more");
 							row.createCell(dateIndex).setCellValue(0);
 						}
 						if (tally && row.getCell(remainingIndex).getNumericCellValue() > 0) {
-							System.out.println("making 1");
+//							System.out.println("making 1");
 							row.getCell(dateIndex).setCellValue(1);
-							System.out.println("cell: " + row.getCell(dateIndex).getNumericCellValue());
+//							System.out.println("cell: " + row.getCell(dateIndex).getNumericCellValue());
 						} else if (!tally) {
-							System.out.println("Trying to make blank");
+//							System.out.println("Trying to make blank");
 							row.createCell(dateIndex);
 						} else {
-							System.out.println("Can't make 1");
+//							System.out.println("Can't make 1");
 						}
 						break;
 					}
@@ -241,10 +241,10 @@ public class TalleyBookReaderWriter {
 
 		while(cellIterator.hasNext()) {
 			Cell cell = cellIterator.next();
-			//System.out.println(counter ++);
+//			System.out.println(counter ++);
 			switch (cell.getCellType()) {
 			case STRING:
-				//System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getStringCellValue() + ")");
+//				System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getStringCellValue() + ")");
 				switch (cell.getStringCellValue()){
 				case "Monthly \nEnd Total":
 					vars[0] = cell.getColumnIndex();
@@ -265,7 +265,7 @@ public class TalleyBookReaderWriter {
 				}
 				break;
 			case NUMERIC:
-				//System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getNumericCellValue() + ")");
+//				System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getNumericCellValue() + ")");
 				if (cell.getNumericCellValue() == day) {
 					vars[4] = cell.getColumnIndex();
 				}
