@@ -17,7 +17,7 @@ public class Driver {
 //		
 //		read.readTalleyCountDay(1, "Month1");
 		
-		OnCall starter = new OnCall();
+		OnCall starter = new OnCall("Monday", 1, "Week1", "Month1");
 		
 		starter.assignOncalls();
 
