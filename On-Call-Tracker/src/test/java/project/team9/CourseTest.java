@@ -2,7 +2,6 @@ package project.team9;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,11 +42,6 @@ public class CourseTest {
 		regularTeacher1 = new RegularTeacher("Nic Maegan", schedule1);
 		regularTeacher2 = new RegularTeacher("Guy Pamelia", schedule2);
 		regularTeacher3 = new RegularTeacher("Les Inigo", schedule3);
-	}
-	
-	@AfterEach
-	public void tearDown() {
-		
 	}
 	
 	@Test

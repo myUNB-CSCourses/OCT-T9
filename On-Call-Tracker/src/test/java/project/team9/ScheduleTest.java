@@ -56,5 +56,41 @@ class ScheduleTest {
 		assertEquals(expectedPeriod2Course, period2CourseResult);
 		assertEquals(expectedPeriod3Course, period3CourseResult);
 	}
+	
+	@Test
+	public void testAssignPeriod() {
+		String expectedPeriod1Course = "ENG3E";
+		String expectedPeriod2Course = "PPZ3C";
+		String expectedPeriod3Course = "NBV3C";
+		
+		schedule1.assignPeriod1(course5);
+		
+		String period1CourseResult = schedule1.getPeriod1().getCode();
+		String period2CourseResult = schedule1.getPeriod2().getCode();
+		String period3CourseResult = schedule1.getPeriod3().getCode();
+		
+		assertEquals(expectedPeriod1Course, period1CourseResult);
+		assertEquals(expectedPeriod2Course, period2CourseResult);
+		assertEquals(expectedPeriod3Course, period3CourseResult);
+	}
+	
+	@Test
+	public void testAssignRoom() {
+		String expectedPeriod1RoomResult = "201";
+		String expectedPeriod2RoomResult = "202";
+		String expectedPeriod3RoomResult = "203";
+		
+		schedule2.assignP1Room("201");
+		schedule2.assignP2Room("202");
+		schedule2.assignP3Room("203");
+		
+		String period1RoomResults = schedule2.getPeriod1Room();
+		String period2RoomResults = schedule2.getPeriod2Room();
+		String period3RoomResults = schedule2.getPeriod3Room();
+		
+		assertEquals(expectedPeriod1RoomResult, period1RoomResults);
+		assertEquals(expectedPeriod2RoomResult, period2RoomResults);
+		assertEquals(expectedPeriod3RoomResult, period3RoomResults);
+	}
 
 }
