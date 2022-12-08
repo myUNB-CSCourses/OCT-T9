@@ -92,23 +92,28 @@ public class OnCall {
 					record = aRecord.get(i);
 					System.out.println("======Checking: " + record.getName());
 					if (record.getP1().equals("A") && !record.getP1Coverage()) {
-						System.out.println("Absent P1");
+						System.out.println("\tAbsent P1");
 						course = getTeacherCourse(record.getName(), 1);
 						period = 1;
 						record.coverP1(true);
 					} else if (record.getP2().equals("A") && !record.getP2Coverage()) {
-						System.out.println("Absent P2");
+						System.out.println("\tAbsent P2");
 						course = getTeacherCourse(record.getName(), 2);
 						period = 2;
 						record.coverP2(true);
 					} else if (record.getP3().equals("A") && !record.getP3Coverage()) {
-						System.out.println("Absent P3");
+						System.out.println("\tAbsent P3");
 						course = getTeacherCourse(record.getName(), 3);
 						period = 3;
 						record.coverP3(true);
 					} else if (record.getP4().equals("A") && !record.getP4Coverage()) {
-						System.out.println("Absent P4");
+						System.out.println("\tAbsent P4");
 						course = getTeacherCourse(record.getName(), 4);
+						try {
+							System.out.println(course);							
+						} catch (Exception e) {
+							System.out.println("Cannot get course");
+						}
 						period = 4;
 						record.coverP4(true);
 					}
@@ -147,6 +152,11 @@ public class OnCall {
 						course = null;
 						period = 0;
 						break;
+					} else {
+						System.out.println("Is null");
+						coveringTeacher = null;
+						course = null;
+						period = 0;
 					}
 					if (i+1==aRecord.size()) {
 						end = true;
