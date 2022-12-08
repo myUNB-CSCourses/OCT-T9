@@ -101,15 +101,17 @@ public class RegularTeacher extends Teacher{
 	}
 	
 	public String toString(){
-		String result = "Schedule: " + dailySchedule.toString();
+		String result = "Teacher: " + getName();
+				
+		result += "\nSchedule: " + dailySchedule.toString();
 		
 		if(absent){
-			result += "\n\tAbsent" + submittedAbsence.toString();
+			result += "\n\tAbsent: " + submittedAbsence.toString();
 		}
 		
 		result += "\nMonth: " + monthlyTally + 
 				  "\nWeek: " + weeklyTally +
-				  "\nAssigned" + this.getAssigned();
+				  "\nAssigned: " + getAssigned();
 		return result;
 	}
 }
