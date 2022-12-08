@@ -30,7 +30,7 @@ public class TalleyBookReaderWriter {
 		int total;
 		int remaining;
 		int priority;
-		int tally;
+		boolean tally;
 		
 		try {
 			ConfigFileReader config = new ConfigFileReader();
@@ -80,9 +80,13 @@ public class TalleyBookReaderWriter {
 				//Prints out a teacher entry
 				} else if (title != null && title.length() != 0) {
 					try {
-						tally = (int)row.getCell(dateIndex).getNumericCellValue();
+						if (row.getCell(dateIndex).getNumericCellValue() == 1) {
+							tally = true;
+						} else {
+							tally = false;
+						}
 					}catch (Exception e) {
-						tally = 0;
+						tally = false;
 					}
 					
 					monthly = (int)row.getCell(monthlyIndex).getNumericCellValue();
@@ -97,16 +101,16 @@ public class TalleyBookReaderWriter {
 //					System.out.println("Remaining: " + remaining);
 //					System.out.println("Priority: " + priority + "\n");
 					if(period == 1) {
-						period1.add(new TallyBook(title, priority, remaining, total, monthly));
+						period1.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					else if(period == 2) {
-						period2.add(new TallyBook(title, priority, remaining, total, monthly));
+						period2.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					else if(period == 3) {
-						period3.add(new TallyBook(title, priority, remaining, total, monthly));
+						period3.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					else if(period == 4) {
-						period4.add(new TallyBook(title, priority, remaining, total, monthly));
+						period4.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					
 				}
@@ -213,11 +217,10 @@ public class TalleyBookReaderWriter {
 				FileOutputStream fos = new FileOutputStream(file);
 				wb.write(fos);
 				fos.close();
-				
 			}
 			wb.close();
 		} catch (Exception e) {
-						e.printStackTrace();
+			e.printStackTrace();
 		}
 		return false;
 	}
