@@ -72,7 +72,8 @@ public class TalleyBookReaderWriter {
 						row = itr.next();
 //						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
 						wb.close();
-						return null;
+						System.out.println("Closing early");
+						break;
 					}
 					period++;
 //					System.out.println("------\nPERIOD " + period + "\n------\n");
@@ -115,10 +116,15 @@ public class TalleyBookReaderWriter {
 					
 				}
 			}
+			System.out.println("period1[" + period1.size() + "]: " + period1);
+			System.out.println("period2[" + period2.size() + "]: " + period2);
+			System.out.println("period3[" + period3.size() + "]: " + period3);
+			System.out.println("period4[" + period4.size() + "]: " + period4);
 			allPeriods.add(period1);
 			allPeriods.add(period2);
 			allPeriods.add(period3);
 			allPeriods.add(period4);
+			System.out.println();
 			wb.close();
 		} catch(Exception e) {
 			e.printStackTrace();
