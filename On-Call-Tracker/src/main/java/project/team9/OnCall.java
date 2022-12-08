@@ -21,13 +21,17 @@ public class OnCall {
 	private AbsenceWorkbook absence = new AbsenceWorkbook();
 	private MasterScheduleReader master = new MasterScheduleReader();
 	private TalleyBookReaderWriter tally = new TalleyBookReaderWriter();
-	
+
 	private int date;
+	private String day;
 	private String week;
+	private String month;
 	
-	public OnCall(String day, int date, String week, String month) {
-		this.date = date;
-		this.week = week;
+	public OnCall(String dayIn, int dateIn, String weekIn, String monthIn) {
+		this.date = dateIn;
+		this.week = weekIn;
+		this.day = dayIn;
+		this.month = monthIn;
 		
 		curriculum = new ArrayList<Course>();
 		curriculum = cRead.curriculumReader();
@@ -36,7 +40,7 @@ public class OnCall {
 		sTeachers = new ArrayList<SupplyTeacher>();
 		aRecord = new ArrayList<AbsenceRecord>();
 		aRecord = absence.workbookReader(day, week);
-		tallies = tally.readTalleyCountDay(1, month);
+		tallies = tally.readTalleyCountDay(date, month);
 	}
 
 	public void assignOncalls() {
@@ -179,21 +183,36 @@ public class OnCall {
 		TallyBook bestCandidate = null;
 		ArrayList<TallyBook> talliesP = tallies.get(period-1);
 		
-		for (int i=0; i<tallies.size(); i++) {
+		System.out.print("\nSearching for best candidate:");
+		for (int i=0; i<talliesP.size(); i++) {
 			TallyBook x = talliesP.get(i);
+			System.out.print(", " + i);
 			if (!x.getTally() && x.getRemaining() > 0) {
+				System.out.print("C");
 				if (bestCandidate == null) {
+					System.out.println("hosen");
 					bestCandidate = x;
 				} else if (x.getPriority() < bestCandidate.getPriority()) {
+					System.out.println("hosen: " + x.getPriority() + " < " + bestCandidate.getPriority());
 					bestCandidate = x;
 				}
 			}
 		}
+		System.out.println("");
 		for (int i=0; i<rTeachers.size(); i++) {
-			if (rTeachers.get(i).getName().equals(bestCandidate.getTeacherName())) {
-				result = rTeachers.get(i);
-				break;
+			try {
+				System.out.print(", " + i);
+				if (rTeachers.get(i).getName().equals(bestCandidate.getTeacherName())) {
+					System.out.println("");
+					result = rTeachers.get(i);
+					tally.updateTeacherTally(result.getName(), month, date, period, true);
+					tallies = tally.readTalleyCountDay(date, month);
+					break;
+				}	
+			} catch (Exception e) {
+				
 			}
+			
 		}
 		return result;
 	}
