@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class OnCall {
 	private ArrayList<RegularTeacher> rTeachers;
-	private ArrayList<SupplyTeacher> sTeachers;
+	private ArrayList<SupplyTeacher> sTeachers;	
 	private ArrayList<AbsenceRecord> aRecord;
 	private ArrayList<Course> curriculum;
 	private ArrayList<ArrayList<TallyBook>> tallies;
@@ -48,11 +48,19 @@ public class OnCall {
 	public void assignOncalls() {
 //		System.out.println(tallies);
 //		System.out.println("assignOnCalls\n===========");
+		ArrayList<SupplyTeacher> sTeachersP1 = cloneSupplyTeachers(sTeachers);
+		ArrayList<SupplyTeacher> sTeachersP2 = cloneSupplyTeachers(sTeachers);
+		ArrayList<SupplyTeacher> sTeachersP3 = cloneSupplyTeachers(sTeachers);
+		ArrayList<SupplyTeacher> sTeachersP4 = cloneSupplyTeachers(sTeachers);	
+		
 		int dayI = 0;
 		int periodI = 1;
 		int subjectI = 2;
 		int supplyI = 3;
 		int replacementI = 4;
+		int replacementIdI = 5;
+		int absenteeI = 6;
+		int absenteeIdI = 7;
 		
 		Cell cell;
 		Row row;
@@ -86,6 +94,12 @@ public class OnCall {
 					supplyI = (int)cell.getColumnIndex();
 				} else if (label.equals("Replacement")) {
 					replacementI = (int)cell.getColumnIndex();
+				} else if (label.equals("Replacement ID")) {
+					replacementIdI = (int)cell.getColumnIndex();
+				} else if (label.equals("Absentee")) {
+					absenteeI = (int)cell.getColumnIndex();
+				} else if (label.equals("Absentee ID")) {
+					absenteeIdI = (int)cell.getColumnIndex();
 				}
 			}
 
@@ -129,16 +143,45 @@ public class OnCall {
 						row.createCell(dayI).setCellValue(date);
 						row.createCell(periodI).setCellValue(period);
 						row.createCell(subjectI).setCellValue(course.getCode());
+						row.createCell(absenteeI).setCellValue(record.getName());
+						
+						for (int j=0; j<rTeachers.size(); j++) {
+							if (rTeachers.get(j).getName().equals(record.getName())) {
+								System.out.println("teacher id: " + rTeachers.get(j).getId());
+								row.createCell(absenteeIdI).setCellValue(rTeachers.get(j).getId());
+								break;
+							} else if (j+1 == rTeachers.size()) {
+								System.out.println("cannot find teacher");
+								row.createCell(absenteeIdI).setCellValue("N/A");
+							}
+						}
 
 //						System.out.println("day: " + date);
 //						System.out.println("period: " + period);
 //						System.out.println("subject: " + course.getCode());
 						
-						if (sTeachers.size() != 0) {
-							coveringTeacher = sTeachers.get(0);
-							sTeachers.remove(0);
+						if ((sTeachersP1.size() != 0 && period == 1)
+								|| (sTeachersP2.size() != 0 && period == 2) 
+								|| (sTeachersP3.size() != 0 && period == 3) 
+								|| (sTeachersP4.size() != 0 && period == 4)) {
+							
+							if (period == 1) {
+								coveringTeacher = sTeachersP1.get(0);
+								sTeachersP1.remove(0);
+							} else if (period == 2) {
+								coveringTeacher = sTeachersP2.get(0);
+								sTeachersP2.remove(0);
+							} else if (period == 3) {
+								coveringTeacher = sTeachersP3.get(0);
+								sTeachersP3.remove(0);
+							} else if (period == 4) {
+								coveringTeacher = sTeachersP4.get(0);
+								sTeachersP4.remove(0);
+							}
+							
 							row.createCell(supplyI).setCellValue("Y");
 							row.createCell(replacementI).setCellValue(coveringTeacher.getName());
+							row.createCell(replacementIdI).setCellValue(coveringTeacher.getId());
 //							System.out.println("Y");
 //							System.out.println("teacher: " + coveringTeacher.getName());
 						} else  {
@@ -147,9 +190,11 @@ public class OnCall {
 //							System.out.println("N");
 							if (coveringTeacher != null) {
 								row.createCell(replacementI).setCellValue(coveringTeacher.getName());
+								row.createCell(replacementIdI).setCellValue(coveringTeacher.getId());
 //								System.out.println("teacher: " + coveringTeacher.getName());
 							} else {
 								row.createCell(replacementI).setCellValue("N/A");
+								row.createCell(replacementIdI).setCellValue("N/A");
 //								System.out.println("N/A");
 							}
 						}
@@ -239,4 +284,30 @@ public class OnCall {
 		}
 		return result;
 	}
+	
+	public ArrayList<SupplyTeacher> cloneSupplyTeachers(ArrayList<SupplyTeacher> list){
+		ArrayList<SupplyTeacher> result = new ArrayList<SupplyTeacher>();
+		
+		for (int i=0; i<list.size(); i++) {
+			result.add(list.get(i));
+		}
+		return result;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
