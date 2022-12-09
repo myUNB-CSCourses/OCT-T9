@@ -2,7 +2,6 @@ package project.team9;
 //not sure if correct
 public class RegularTeacher extends Teacher{
 	
-	private AbsenceRecord submittedAbsence;
 	private Schedule dailySchedule;
 	
 	//do we need a term tally
