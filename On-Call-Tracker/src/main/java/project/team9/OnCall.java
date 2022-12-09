@@ -294,20 +294,3 @@ public class OnCall {
 		return result;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
