@@ -124,6 +124,7 @@ public class TalleyBookReaderWriter {
 			allPeriods.add(period2);
 			allPeriods.add(period3);
 			allPeriods.add(period4);
+			System.out.println();
 			wb.close();
 		} catch(Exception e) {
 			e.printStackTrace();
