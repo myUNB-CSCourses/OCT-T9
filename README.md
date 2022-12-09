@@ -9,10 +9,11 @@ The objective of  the project is to design and build a software tool which will 
 
 |    **INPUT**            | **OUTPUT**              |
 |-------------------------|-------------------------|
-| Absences.xlsx           | CoverageReport.xlsx     |
+| Absences.xlsx           | Output.xlsx             |
 | On-call_Tallies.xlsx    | On-call_Tallies.xlsx    |
 | CurriculumSummary.xlsx  |                         |
 | MasterSchedule.xlsx     |                         |
+| SupplyList.xlsx         |                         |
 
 ## Dependency files
 - poi-3.17.jar
