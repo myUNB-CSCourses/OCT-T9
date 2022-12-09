@@ -21,6 +21,7 @@ public class OnCall {
 	private AbsenceWorkbook absence = new AbsenceWorkbook();
 	private MasterScheduleReader master = new MasterScheduleReader();
 	private TalleyBookReaderWriter tally = new TalleyBookReaderWriter();
+	private SupplyTeacherReader supply = new SupplyTeacherReader();
 
 	private int date;
 	private String day;
@@ -38,6 +39,7 @@ public class OnCall {
 		rTeachers = new ArrayList<RegularTeacher>();
 		rTeachers = master.masterReader(curriculum);
 		sTeachers = new ArrayList<SupplyTeacher>();
+		sTeachers = supply.readSupplyTeacher(dayIn, weekIn);
 		aRecord = new ArrayList<AbsenceRecord>();
 		aRecord = absence.workbookReader(day, week);
 		tallies = tally.readTalleyCountDay(date, month);

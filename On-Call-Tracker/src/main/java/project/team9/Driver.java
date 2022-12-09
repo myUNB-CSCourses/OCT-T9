@@ -21,6 +21,9 @@ public class Driver {
 		
 		starter.assignOncalls();
 
+//		SupplyTeacherReader n = new SupplyTeacherReader();
+//		
+//		n.readSupplyTeacher("Monday", "Week1");
 		
 		
 //		for(Course var : courses.curriculumReader()) {
