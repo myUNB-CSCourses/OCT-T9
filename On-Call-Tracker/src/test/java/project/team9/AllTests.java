@@ -5,7 +5,7 @@ import org.junit.platform.suite.api.SelectClasses;
 
 
 @Suite
-@SelectClasses ({TeacherTest.class, CourseTest.class, MasterScheduleReaderTest.class, ScheduleTest.class})
+@SelectClasses ({TeacherTest.class, CourseTest.class, MasterScheduleReaderTest.class, ScheduleTest.class, ConfigFileReaderTest.class})
 class AllTests {
 
 }

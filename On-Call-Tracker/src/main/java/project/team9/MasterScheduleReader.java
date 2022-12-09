@@ -145,16 +145,9 @@ public class MasterScheduleReader {
 //	                System.out.println("Period 4: " + period4);
 //	                System.out.println("Period 4 Room: " + p4Room);
 //	                System.out.println("");
-	                
-	                p1 = matchCourse(period1, curr);
-	                p2 = matchCourse(period2, curr);
-	                p3 = matchCourse(period3, curr);
-	                p4 = matchCourse(period4, curr);
-
 	                //========================================================
 	                
-	                
-	                
+	                /*
 	                int index = 0;
 	                String piece;
 	                if (p1 == null) {
@@ -253,10 +246,59 @@ public class MasterScheduleReader {
 	                		}
 	                	}
 	                }
-	                //========================================================
+	                */
+	                if (!period1.equals("X") && !period1.equals("SPARE")) {
+	                	p1 = matchCourse(period1, curr);
+	                	if (p1 == null) {
+		                	p1 = new Course("N/A", period1, "N/A", "N/A", "N/A");
+		                }
+	                	if (period1.equals("X") || period1.equals("SPARE") || period1.equals("M-1.00") || period1.equals("L-1.00") || period1.equals("C-1.00") || period1.equals("G-1.00") || period1.equals("T-1.00")) {
+	                		p1.assignCoverage(false);
+	                	}
+	                } else {
+	                	p1 = null;
+	                }
+	                if (!period2.equals("X") && !period2.equals("SPARE")) {
+	                	p2 = matchCourse(period2, curr);
+	                	if (p2 == null) {
+		                	p2 = new Course("N/A", period2, "N/A", "N/A", "N/A");
+		                }
+	                	if (period2.equals("X") || period2.equals("SPARE") || period2.equals("M-1.00") || period2.equals("L-1.00") || period2.equals("C-1.00") || period2.equals("G-1.00") || period2.equals("T-1.00")) {
+	                		p2.assignCoverage(false);
+	                	}
+	                } else {
+	                	p2 = null;
+	                }
+	                if (!period3.equals("X") && !period3.equals("SPARE")) {
+	                	p3 = matchCourse(period3, curr);
+	                	if (p3 == null) {
+		                	p3 = new Course("N/A", period3, "N/A", "N/A", "N/A");
+		                }
+	                	if (period3.equals("X") || period3.equals("SPARE") || period3.equals("M-1.00") || period3.equals("L-1.00") || period3.equals("C-1.00") || period3.equals("G-1.00") || period3.equals("T-1.00")) {
+	                		p3.assignCoverage(false);
+	                	}
+	                } else {
+	                	p3 = null;
+	                }
+	                if (!period4.equals("X") && !period4.equals("SPARE")) {
+	                	p4 = matchCourse(period4, curr);
+	                	if (p4 == null) {
+		                	p4 = new Course("N/A", period4, "N/A", "N/A", "N/A");
+		                }
+	                	if (period4.equals("X") || period4.equals("SPARE") || period4.equals("M-1.00") || period4.equals("L-1.00") || period4.equals("C-1.00") || period4.equals("G-1.00") || period4.equals("T-1.00")) {
+	                		p4.assignCoverage(false);
+	                	}
+	                } else {
+	                	p4 = null;
+	                }
 	                
 	                
-	                schedule = new Schedule(p1, p2 ,p3 ,p4);
+	                
+	                try {
+		                schedule = new Schedule(p1, p2 ,p3 ,p4, p1Room, p2Room, p3Room, p4Room);
+	                } catch (Exception e) {
+	                	schedule = new Schedule(p1, p2 ,p3 ,p4);
+	                }
 	                teachers.add(new RegularTeacher(teacherName, schedule));
 	            }
 	        }
@@ -265,7 +307,7 @@ public class MasterScheduleReader {
 	        }
 		
         //========================================================
-		problemCodesLog.sort(null);
+//		problemCodesLog.sort(null);
 //		System.out.println("\n\n\n====================\n");
 //		for(int i=0; i<problemCodesLog.size(); i++) {
 //			System.out.println(problemCodesLog.get(i));

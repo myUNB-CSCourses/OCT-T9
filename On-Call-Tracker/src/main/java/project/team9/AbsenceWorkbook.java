@@ -17,7 +17,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class AbsenceWorkbook{
 	private String day;
 	private String week;
-@SuppressWarnings("deprecation")
 
 	public void workbookGen() {
 		Workbook workbook = new XSSFWorkbook();
@@ -122,9 +121,6 @@ public class AbsenceWorkbook{
 		return record;
 	}
 
-	public void workbookWriter() {
-	
-	}
 	public static int[] configurate(XSSFSheet sheet, String day) {
 	    int[] vars = new int[4];
 	    Row row = sheet.getRow(0);

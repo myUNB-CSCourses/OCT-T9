@@ -30,7 +30,7 @@ public class TalleyBookReaderWriter {
 		int total;
 		int remaining;
 		int priority;
-		int tally;
+		boolean tally;
 		
 		try {
 			ConfigFileReader config = new ConfigFileReader();
@@ -72,7 +72,8 @@ public class TalleyBookReaderWriter {
 						row = itr.next();
 //						System.out.println(row.getCell(1).getStringCellValue() + ": " + row.getCell(2).getNumericCellValue());
 						wb.close();
-						return null;
+//						System.out.println("Closing early");
+						break;
 					}
 					period++;
 //					System.out.println("------\nPERIOD " + period + "\n------\n");
@@ -80,9 +81,13 @@ public class TalleyBookReaderWriter {
 				//Prints out a teacher entry
 				} else if (title != null && title.length() != 0) {
 					try {
-						tally = (int)row.getCell(dateIndex).getNumericCellValue();
+						if (row.getCell(dateIndex).getNumericCellValue() == 1) {
+							tally = true;
+						} else {
+							tally = false;
+						}
 					}catch (Exception e) {
-						tally = 0;
+						tally = false;
 					}
 					
 					monthly = (int)row.getCell(monthlyIndex).getNumericCellValue();
@@ -97,24 +102,29 @@ public class TalleyBookReaderWriter {
 //					System.out.println("Remaining: " + remaining);
 //					System.out.println("Priority: " + priority + "\n");
 					if(period == 1) {
-						period1.add(new TallyBook(title, priority, remaining, total, monthly));
+						period1.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					else if(period == 2) {
-						period2.add(new TallyBook(title, priority, remaining, total, monthly));
+						period2.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					else if(period == 3) {
-						period3.add(new TallyBook(title, priority, remaining, total, monthly));
+						period3.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					else if(period == 4) {
-						period4.add(new TallyBook(title, priority, remaining, total, monthly));
+						period4.add(new TallyBook(title, priority, remaining, total, monthly, tally));
 					}
 					
 				}
 			}
+//			System.out.println("period1[" + period1.size() + "]: " + period1);
+//			System.out.println("period2[" + period2.size() + "]: " + period2);
+//			System.out.println("period3[" + period3.size() + "]: " + period3);
+//			System.out.println("period4[" + period4.size() + "]: " + period4);
 			allPeriods.add(period1);
 			allPeriods.add(period2);
 			allPeriods.add(period3);
 			allPeriods.add(period4);
+			System.out.println();
 			wb.close();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -173,21 +183,21 @@ public class TalleyBookReaderWriter {
 					row = itr.next();
 					title = row.getCell(1).getStringCellValue();
 					if (title.equals(teacherName)) {
-						System.out.println("==========\nFound Teacher: " + title + "[" + dateIndex + ", " + row.getRowNum() + "]");
+//						System.out.println("==========\nFound Teacher: " + title + "[" + dateIndex + ", " + row.getRowNum() + "]");
 						
 						if (row.getCell(dateIndex) == null) {
-							System.out.println("Cell is null. no more");
+//							System.out.println("Cell is null. no more");
 							row.createCell(dateIndex).setCellValue(0);
 						}
 						if (tally && row.getCell(remainingIndex).getNumericCellValue() > 0) {
-							System.out.println("making 1");
+//							System.out.println("making 1");
 							row.getCell(dateIndex).setCellValue(1);
-							System.out.println("cell: " + row.getCell(dateIndex).getNumericCellValue());
+//							System.out.println("cell: " + row.getCell(dateIndex).getNumericCellValue());
 						} else if (!tally) {
-							System.out.println("Trying to make blank");
+//							System.out.println("Trying to make blank");
 							row.createCell(dateIndex);
 						} else {
-							System.out.println("Can't make 1");
+//							System.out.println("Can't make 1");
 						}
 						break;
 					}
@@ -213,11 +223,10 @@ public class TalleyBookReaderWriter {
 				FileOutputStream fos = new FileOutputStream(file);
 				wb.write(fos);
 				fos.close();
-				
 			}
 			wb.close();
 		} catch (Exception e) {
-						e.printStackTrace();
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -232,10 +241,10 @@ public class TalleyBookReaderWriter {
 
 		while(cellIterator.hasNext()) {
 			Cell cell = cellIterator.next();
-			//System.out.println(counter ++);
+//			System.out.println(counter ++);
 			switch (cell.getCellType()) {
 			case STRING:
-				//System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getStringCellValue() + ")");
+//				System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getStringCellValue() + ")");
 				switch (cell.getStringCellValue()){
 				case "Monthly \nEnd Total":
 					vars[0] = cell.getColumnIndex();
@@ -256,7 +265,7 @@ public class TalleyBookReaderWriter {
 				}
 				break;
 			case NUMERIC:
-				//System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getNumericCellValue() + ")");
+//				System.out.println("cell[" + cell.getColumnIndex() + "]: (" + cell.getNumericCellValue() + ")");
 				if (cell.getNumericCellValue() == day) {
 					vars[4] = cell.getColumnIndex();
 				}

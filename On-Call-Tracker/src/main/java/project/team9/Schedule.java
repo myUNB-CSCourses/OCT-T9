@@ -81,4 +81,15 @@ public class Schedule {
 		p4Room = room;
 	}
 	
+	public String toString() {
+		String result = "";
+		
+		result += "\tP1: \n[" + period1 + "] ";
+		result += "\n\tP2: \n[" + period2 + "] ";
+		result += "\n\tP3: \n[" + period3 + "] ";
+		result += "\n\tP4: \n[" + period4 + "] ";
+		
+		
+		return result;
+	}
 }
