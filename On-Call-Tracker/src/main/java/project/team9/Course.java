@@ -15,6 +15,7 @@ public class Course {
 		this.teachable = teachableIn;
 		this.grade = gradeIn;
 		this.pathway = pathwayIn;
+		coverage = true;
 	}
 	
 	public String getCode () {
