@@ -1,4 +1,5 @@
 # CS2043 Team Project (Team 9)
+![ScreenShot](main.png)
 
 ## Description
 
