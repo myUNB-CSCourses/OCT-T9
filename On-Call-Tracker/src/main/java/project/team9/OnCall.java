@@ -105,6 +105,8 @@ public class OnCall {
 
 //			System.out.println("======Done configurating");
 			
+			System.out.println("Day\tPeriod\tSubject\t\tReplacement\tRep ID\tAbsentee\tAbsentee ID");
+			
 			boolean end = false;
 			for(int x=1; !end && x<50; x++) {
 				row = sheet.createRow(x);
@@ -144,21 +146,13 @@ public class OnCall {
 						row.createCell(periodI).setCellValue(period);
 						row.createCell(subjectI).setCellValue(course.getCode());
 						row.createCell(absenteeI).setCellValue(record.getName());
-						
-						for (int j=0; j<rTeachers.size(); j++) {
-							if (rTeachers.get(j).getName().equals(record.getName())) {
-								System.out.println("teacher id: " + rTeachers.get(j).getId());
-								row.createCell(absenteeIdI).setCellValue(rTeachers.get(j).getId());
-								break;
-							} else if (j+1 == rTeachers.size()) {
-								System.out.println("cannot find teacher");
-								row.createCell(absenteeIdI).setCellValue("N/A");
-							}
+						System.out.print(date);
+						System.out.print("\t" + period);
+						if (course.getCode().length() > 6) {
+							System.out.print("\t" + course.getCode() + "\t");
+						} else {
+							System.out.print("\t" + course.getCode() + "\t\t");							
 						}
-
-//						System.out.println("day: " + date);
-//						System.out.println("period: " + period);
-//						System.out.println("subject: " + course.getCode());
 						
 						if ((sTeachersP1.size() != 0 && period == 1)
 								|| (sTeachersP2.size() != 0 && period == 2) 
@@ -182,22 +176,42 @@ public class OnCall {
 							row.createCell(supplyI).setCellValue("Y");
 							row.createCell(replacementI).setCellValue(coveringTeacher.getName());
 							row.createCell(replacementIdI).setCellValue(coveringTeacher.getId());
+							System.out.print("Y");
+							System.out.print("\t" + coveringTeacher.getName());
+							System.out.print("\t" + coveringTeacher.getId());
 //							System.out.println("Y");
 //							System.out.println("teacher: " + coveringTeacher.getName());
 						} else  {
 							coveringTeacher = getRegularTeacher(period);
 							row.createCell(supplyI).setCellValue("N");
+							System.out.print("N");
 //							System.out.println("N");
 							if (coveringTeacher != null) {
 								row.createCell(replacementI).setCellValue(coveringTeacher.getName());
 								row.createCell(replacementIdI).setCellValue(coveringTeacher.getId());
+								System.out.print("\t" + coveringTeacher.getName());
+								System.out.print("\t" + coveringTeacher.getId());
 //								System.out.println("teacher: " + coveringTeacher.getName());
 							} else {
 								row.createCell(replacementI).setCellValue("N/A");
 								row.createCell(replacementIdI).setCellValue("N/A");
-//								System.out.println("N/A");
+								System.out.print("\tN/A");
+								System.out.print("\tN/A");
 							}
 						}
+						
+						System.out.print("\t" + record.getName());
+						for (int j=0; j<rTeachers.size(); j++) {
+							if (rTeachers.get(j).getName().equals(record.getName())) {
+								System.out.print("\t" + rTeachers.get(j).getId());
+								row.createCell(absenteeIdI).setCellValue(rTeachers.get(j).getId());
+								break;
+							} else if (j+1 == rTeachers.size()) {
+								System.out.print("N/A");
+								row.createCell(absenteeIdI).setCellValue("N/A");
+							}
+						}
+						System.out.println("");
 //						System.out.println("\n");
 						coveringTeacher = null;
 						course = null;
